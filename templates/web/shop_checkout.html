@@ -1,0 +1,554 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Taste of India Responsive Restaurant</title>
+    <meta name="author" content="Shafayet, Ekattor iT" />
+
+    <meta
+      name="description"
+      content="Taste of india is a Responsive HTML5 Template for Restaurants and food related services."
+    />
+    <meta
+      name="keywords"
+      content="taste of india, responsive, restaurant, food, reservation"
+    />
+
+    <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
+    <link rel="shortcut icon" href="{% static 'web/img/favicon.ico' %}" />
+
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/font-awesome/css/font-awesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/plugin.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/main.css' %}" />
+    <!--[if lt IE 9]>
+      <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+
+    <div class="preloder animated">
+      <div class="scoket">
+        <img src="{% static 'web/img/preloader.svg' %}" alt="" />
+      </div>
+    </div>
+    <div class="body">
+      <div class="main-wrapper">
+        <nav class="navbar navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="index_animation.html">
+                <img
+                  src="{% static 'web/img/svg/Color%20logo%20with%20background.svg' %}"
+                  alt="nav-logo"
+                  height="60"
+                  ;
+                  width="250"
+                />
+              </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'home' %}">Home</a></li>
+
+                <li><a href="{% url 'about' %}">About</a></li>
+
+                <li><a href="{% url 'menu' %}">Menu</a></li>
+
+                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Pages<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="elements.html">Shortcodes</a></li>
+                    <li><a href="shop_account.html">Login / Signup</a></li>
+                    <li><a href="404.html">404 Page</a></li>
+                  </ul>
+                </li>
+
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+
+                <li style="padding-top: 15px">
+                  <button type="button" class="btn btn-danger">
+                    <a href="{% url 'menu' %}" style="color: inherit"
+                      >Order Online</a
+                    >
+                  </button>
+                </li>
+
+                <li style="padding-top: 15px; padding-left: 0px">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#cart"
+                  >
+                    <i class="fa fa-shopping-cart fsc pull-left"></i> (<span
+                      class="total-count"
+                    ></span
+                    >)
+                  </button>
+                </li>
+                <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-html="true" data-toggle="popover" title="MyCart" data-placement="bottom" data-content="Bottom popover">
+          Cart(<span id="cart">0</span>)
+        </button>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <section class="page_header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h2 class="text-uppercase">Checkout</h2>
+                <p>Enter your address and get these items in your doorstep</p>
+                <button type="button" class="btn btn-warning">
+                  <a href="{% url 'menu' %}" style="color: inherit"
+                    >Order Online</a
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="shop-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div class="row">
+                  <div class="container" id="cont">
+    <div class="col my-3">
+        <span id="title"><h2> My Awesome Cart Express Checkout - Review Your Cart items </h2></span>
+        <div class="my-2">
+            <ul class="list-group" id='items'>
+            </ul>
+        </div>
+    </div>
+    <div class="col my-4">
+        <span id="info">
+        <h2>{{ request.user.first_name }} Enter Address & Other Details</h2>
+        <form method="post" action="checkout/">{% csrf_token %}
+            <input type="hidden" name="itemsJson" id="itemsJson">
+            <input type="hidden" name="amount" id="amount">
+            <input type="hidden" name="user_id" id="user_id" value="{{ request.user.id }}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="Email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="abc@gmail.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Address1">Address</label>
+                <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St" required>
+            </div>
+            <div class="form-group">
+                <label for="Address2">Address Line 2</label>
+                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="City">City</label>
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Surat" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="State">State</label>
+                    <input type="text" class="form-control" id="state" name="state" placeholder="Gujarat" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="zip_code">Zip</label>
+                    <input type="text" class="form-control" id="zip_code" name="zip_code" placeholder="xxxxxx" required pattern="[0-9]{6}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="xxxxxxxxxxx" required pattern="[0-9]{10}">
+            </div>
+            <div class="alert alert-info">
+              <strong>Info!</strong> online payment are currently disabled so please choose cash on delivery.
+            </div>
+            <button type="submit" class="btn btn-primary" name="onlinePay" disabled>Online Pay</button>
+            <button type="submit" class="btn btn-primary" name="cashOnDelivery">Cash On Delivery</button>
+        </form>
+        </span>
+    </div>
+</div>
+                </div>
+                <br />
+                <h4 class="text-left">Your order</h4>
+                <br />
+                <table class="table table-bordered extra-padding">
+                  <tbody>
+                    <tr>
+                      <th>Cart Subtotal</th>
+                      <td><span class="amount">£190.00</span></td>
+                    </tr>
+                    <tr>
+                      <th>Shipping and Handling</th>
+                      <td>Free Shipping</td>
+                    </tr>
+                    <tr>
+                      <th>Order Total</th>
+                      <td>
+                        <strong><span class="amount">£190.00</span></strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <h4 class="text-left">Payment Method</h4>
+                <br />
+                <div class="payment-method">
+                  <div class="row">
+                    <form>
+                      <div class="col-md-4">
+                        <label>
+                          <input
+                            name="payment"
+                            id="radio1"
+                            class="css-checkbox"
+                            type="radio"
+                          /><span>Direct Bank Transfer</span></label
+                        >
+                        <div class="space20"></div>
+                        <p>
+                          Make payment directly into our bank account and use
+                          your Order ID as the reference.
+                        </p>
+                      </div>
+                      <div class="col-md-4">
+                        <label>
+                          <input
+                            name="payment"
+                            id="radio2"
+                            class="css-checkbox"
+                            type="radio"
+                          /><span>Cheque Payment</span></label
+                        >
+                        <div class="space20"></div>
+                        <p>
+                          Please send your cheque to BLVCK Fashion House,
+                          Oatland Rood, UK, LS71JR
+                        </p>
+                      </div>
+                      <div class="col-md-4">
+                        <label>
+                          <input
+                            name="payment"
+                            id="radio3"
+                            class="css-checkbox"
+                            type="radio"
+                          /><span>Paypal</span></label
+                        >
+                        <div class="space20"></div>
+                        <p>
+                          Pay via PayPal; you can pay with your credit card if
+                          you don't have a PayPal account
+                        </p>
+                      </div>
+                    </form>
+                  </div>
+                  <br />
+                  <form class="text-center">
+                    <input
+                      name="checkboxG2"
+                      id="checkboxG2"
+                      class="css-checkbox"
+                      type="checkbox"
+                    /><span
+                      >I've read and accept the
+                      <a href="index.html">terms &amp; conditions</a></span
+                    >
+                  </form>
+                  <div class="text-center top-space-lg">
+                    <a
+                      href="shop_account_detail.html"
+                      class="btn btn-default btn-lg"
+                      >Pay Now</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Modal -->
+
+        <!-- END EDMO HTML (Happy Coding!)-->
+
+        <section class="subscribe">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <h1>Subscribe</h1>
+                <p>Get updates about new dishes and upcoming events</p>
+                <form
+                  class="form-inline"
+                  action="https://demo.web3canvas.com/themeforest/tomato/php/subscribe.php"
+                  id="invite"
+                  method="POST"
+                >
+                  <div class="form-group">
+                    <input
+                      class="e-mail form-control"
+                      name="email"
+                      id="address"
+                      type="email"
+                      placeholder="Your Email Address"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-default">
+                    <i class="fa fa-angle-right"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <h1>About us</h1>
+                <p>
+                  Taste of India is not only a name. It is the representation of
+                  of South Asian delicious food. Tysons Corner Center is a place
+                  with an excellent demographic diversity. Our restaurant is at
+                  the food court (3rd floor) of the mall.
+                </p>
+                <a href="about.html">Read more &rarr;</a>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <!--empty div-->
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <h1>Reach us</h1>
+
+                <div class="footer-address">
+                  <p>
+                    <i class="fa fa-map-marker"></i>3200 S AIRPORT RD W,<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp; TRAVERSE CITY MI
+                  </p>
+                  <p><i class="fa fa-phone"></i>Phone: (929) 346-2200</p>
+                  <p>
+                    <i class="fa fa-envelope-o"></i
+                    ><a
+                      href="https://demo.web3canvas.com/cdn-cgi/l/email-protection"
+                      class="__cf_email__"
+                      data-cfemail="41323431312e33350133243235203433202f356f222e2c"
+                      >[email&#160;protected]</a
+                    >
+                  </p>
+                </div>
+
+                <div class="footer-social-icons">
+                  <a href="https://www.facebook.com/">
+                    <i class="fa fa-facebook-square"></i>
+                  </a>
+                  <a href="https://www.twitter.com/">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                  <a href="https://plus.google.com/">
+                    <i class="fa fa-google"></i>
+                  </a>
+                  <a href="https://www.youtube.com/">
+                    <i class="fa fa-youtube-play"></i>
+                  </a>
+                  <a href="https://www.vimeo.com/">
+                    <i class="fa fa-vimeo"></i>
+                  </a>
+                  <a href="https://www.pinterest.com/">
+                    <i class="fa fa-pinterest-p"></i>
+                  </a>
+                  <a href="http://www.linkedin.com/">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-copyrights">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    <i class="fa fa-copyright"></i>
+                    <script>
+                      document.write(new Date().getFullYear());
+                    </script>
+                    . Taste of India. All rights reserved. Designed with
+                    <i class="fa fa-heart primary-color"></i> by Ekattor iT
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="b-settings-panel">
+      <div class="settings-section">
+        <span> Boxed </span>
+        <div class="b-switch">
+          <div class="switch-handle"></div>
+        </div>
+        <span> Wide </span>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Main Background</h5>
+      <div class="settings-section bg-list">
+        <div class="bg-wood_pattern"></div>
+        <div class="bg-shattered"></div>
+        <div class="bg-vichy"></div>
+        <div class="bg-random-grey-variations"></div>
+        <div class="bg-irongrip"></div>
+        <div class="bg-gplaypattern"></div>
+        <div class="bg-diamond_upholstery"></div>
+        <div class="bg-denim"></div>
+        <div class="bg-crissXcross"></div>
+        <div class="bg-climpek"></div>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Color Scheme</h5>
+      <div class="settings-section color-list">
+        <div data-src="{% static 'web/css/themes/blue.css' %}" style="background: #45b5f5"></div>
+        <div data-src="{% static 'web/css/themes/brown.css' %}" style="background: #dc8068"></div>
+        <div data-src="{% static 'web/css/themes/cyan.css' %}" style="background: #00becc"></div>
+        <div data-src="{% static 'web/css/themes/green.css' %}" style="background: #5bb75b"></div>
+        <div data-src="{% static 'web/css/themes/orange.css' %}" style="background: #ff7149"></div>
+        <div data-src="{% static 'web/css/themes/pink.css' %}" style="background: #fba1a1"></div>
+        <div data-src="{% static 'web/css/themes/red.css' %}" style="background: #dc3522"></div>
+        <div data-src="{% static 'web/css/themes/yellow.css' %}" style="background: #fdb813"></div>
+      </div>
+      <a data-src="{% static 'web/css/style.css' %}" class="reset"
+        ><span class="bg-wood_pattern">Reset</span></a
+      >
+      <div class="btn-settings"></div>
+    </div>
+
+    <script
+      data-cfasync="false"
+      src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="{% static 'web/js/vendor/jquery-1.11.2.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="{% static 'web/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.flexslider-min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/spectragram.js' %}"></script>
+    <script src="{% static 'web/js/vendor/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.ui.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-clockpicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/slick.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/wow.min.js' %}"></script>
+    <script src="{% static 'web/js/animation.js' %}"></script>
+    <script src="{% static 'web/js/vendor/vegas/vegas.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.mb.YTPlayer.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.stellar.js' %}"></script>
+    <script src="{% static 'web/js/main.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/jquery.ketchup.all.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/main.js' %}"></script>
+
+<!--    <script src="{% static './web/js/script.js' %}"></script>-->
+
+    <script>
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+}
+// console.log(cart);
+var sum = 0;
+var sumPrice = 0;
+var totalPrice = 0;
+if ($.isEmptyObject(cart)) {
+    // If object is empty
+    mystr = "<div class='alert alert-info'><font style='font-size:22px'>"
+    mystr = mystr + "<center>Your cart is <strong>Empty</strong>, please <strong>Add</strong> some items before checking out ! </center>"
+    mystr = mystr + "<center>Click <a href='/shop/' class='alert-link'>Here</a> to Add items.</center></font></div>";
+    $('#items').append(mystr);
+    document.getElementById('info').innerHTML = "";
+    document.getElementById('title').innerHTML = "";
+} else {
+    var i = 0;
+    for (item in cart) {
+        let name = cart[item][1];
+        let qty = cart[item][0];
+        let itemPrice = cart[item][2];
+        sum = sum + qty;
+        sumPrice = qty * itemPrice;
+        totalPrice = totalPrice + sumPrice;
+        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${++i} : ${name}<span class="badge badge-primary badge-pill">${qty} x Rs. ${itemPrice} = Rs. ${sumPrice}</span></li>`;
+        $('#items').append(mystr);
+    }
+    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center" style="background: bisque;">Total Price:</span><span class="badge badge-danger badge-pill" id="totalPrice">Rs. ${totalPrice} /-</span></li>`;
+    $('#items').append(mystr);
+}
+document.getElementById('cart').innerHTML = sum;
+document.getElementById('totalPrice').innerHTML = totalPrice;
+
+$('#itemsJson').val(JSON.stringify(cart));
+$('#amount').val($('#totalPrice').html());
+
+{% if thank %}
+alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
+localStorage.clear();
+document.location="/menu";
+{%endif%}
+
+//    /* restrict user browser click go back button */
+//    function preback() { window.history.forward(); }
+//    setTimeout("preback()", 0);
+//    window.onunload = function() { null };
+</script>
+  </body>
+
+</html>

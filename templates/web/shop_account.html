@@ -1,0 +1,454 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Taste of India Restaurant</title>
+    <meta name="author" content="Shafayet, Ekattor iT" />
+
+    <meta
+      name="description"
+      content="Tomato is a Responsive HTML5 Template for Restaurants and food related services."
+    />
+    <meta
+      name="keywords"
+      content="tomato, responsive, html5, restaurant, template, food, reservation"
+    />
+
+    <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
+    <link rel="shortcut icon" href="{% static 'web/img/favicon.ico' %}" />
+
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/font-awesome/css/font-awesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/plugin.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/main.css' %}" />
+    <!--[if lt IE 9]>
+      <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+
+    <div class="preloder animated">
+      <div class="scoket">
+        <img src="{% static 'web/img/preloader.svg' %}" alt="" />
+      </div>
+    </div>
+    <div class="body">
+      <div class="main-wrapper">
+        <nav class="navbar navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="index_animation.html">
+                <img
+                  src="{% static 'web/img/svg/Color%20logo%20with%20background.svg' %}"
+                  alt="nav-logo"
+                  height="60"
+                  ;
+                  width="250"
+                />
+              </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="index_animation.html">Home</a></li>
+
+                <li><a href="about.html">About</a></li>
+
+                <li><a href="menu_grid.html">Menu</a></li>
+
+                <li><a href="gallery.html">Gallery</a></li>
+
+                <li class="dropdown">
+                  <a
+                    href="about.html"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Pages<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="elements.html">Shortcodes</a></li>
+                    <li><a href="shop_account.html">Login / Signup</a></li>
+                    <li><a href="404.html">404 Page</a></li>
+                  </ul>
+                </li>
+
+                <li><a href="blog_right_sidebar.html">Blog</a></li>
+
+                <li><a href="contact.html">Contact</a></li>
+
+                <li style="padding-top: 15px">
+                  <button type="button" class="btn btn-danger">
+                    <a href="menu_grid.html" style="color: inherit"
+                      >Order Online</a
+                    >
+                  </button>
+                </li>
+
+                <li style="padding-top: 15px; padding-left: 0px">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#cart"
+                  >
+                    <i class="fa fa-shopping-cart fsc pull-left"></i> (<span
+                      class="total-count"
+                    ></span
+                    >)
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <section class="page_header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h2 class="text-uppercase">Account</h2>
+                <p>Please login or signup to continue with your purchase</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="shop-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row shop-login">
+                  <div class="col-md-6">
+                    <div class="box-content">
+                      <h3 class="text-center">Existing Customer</h3>
+                      <br />
+                      <form class="logregform">
+                        <div class="row">
+                          <div class="form-group">
+                            <div class="col-md-12">
+                              <label>Username or E-mail Address</label>
+                              <input
+                                type="text"
+                                value=""
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                          <div class="form-group">
+                            <div class="col-md-12">
+                              <a class="pull-right" href="index.html"
+                                >(Lost Password?)</a
+                              >
+                              <label>Password</label>
+                              <input
+                                type="password"
+                                value=""
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <span class="remember-box checkbox">
+                              <label for="rememberme">
+                                <input
+                                  type="checkbox"
+                                  id="rememberme"
+                                  name="rememberme"
+                                />Remember Me
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-md-6">
+                            <button
+                              type="submit"
+                              class="btn btn-default pull-right"
+                            >
+                              Login
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="box-content">
+                      <h3 class="text-center">Register An Account</h3>
+                      <br />
+                      <form class="logregform">
+                        <div class="row">
+                          <div class="form-group">
+                            <div class="col-md-12">
+                              <label>E-mail Address</label>
+                              <input
+                                type="text"
+                                value=""
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clearfix space20"></div>
+                        <div class="row">
+                          <div class="form-group">
+                            <div class="col-md-6">
+                              <label>Password</label>
+                              <input
+                                type="password"
+                                value=""
+                                class="form-control"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label>Re-enter Password</label>
+                              <input
+                                type="password"
+                                value=""
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="space20"></div>
+                            <button
+                              type="submit"
+                              class="btn btn-default pull-right"
+                            >
+                              Register
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="cart"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="show-cart table"></table>
+                <div>Total price: $<span class="total-cart"></span></div>
+              </div>
+              <div class="modal-footer">
+                <button class="clear-cart btn btn-danger">Clear Cart</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary">Order now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END EDMO HTML (Happy Coding!)-->
+
+        <section class="footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <h1>About us</h1>
+                <p>
+                  Taste of India is not only a name. It is the representation of
+                  of South Asian delicious food. Tysons Corner Center is a place
+                  with an excellent demographic diversity. Our restaurant is at
+                  the food court (3rd floor) of the mall.
+                </p>
+                <a href="about.html">Read more &rarr;</a>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <!--empty div-->
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <h1>Reach us</h1>
+
+                <div class="footer-address">
+                  <p>
+                    <i class="fa fa-map-marker"></i>3200 S AIRPORT RD W,<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp; TRAVERSE CITY MI
+                  </p>
+                  <p><i class="fa fa-phone"></i>Phone: (929) 346-2200</p>
+                  <p>
+                    <i class="fa fa-envelope-o"></i
+                    ><a
+                      href="https://demo.web3canvas.com/cdn-cgi/l/email-protection"
+                      class="__cf_email__"
+                      data-cfemail="0c7f797c7c637e784c7e697f786d797e6d6278226f6361"
+                      >[email&#160;protected]</a
+                    >
+                  </p>
+                </div>
+
+                <div class="footer-social-icons">
+                  <a href="https://www.facebook.com/">
+                    <i class="fa fa-facebook-square"></i>
+                  </a>
+                  <a href="https://www.twitter.com/">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                  <a href="https://plus.google.com/">
+                    <i class="fa fa-google"></i>
+                  </a>
+                  <a href="https://www.youtube.com/">
+                    <i class="fa fa-youtube-play"></i>
+                  </a>
+                  <a href="https://www.vimeo.com/">
+                    <i class="fa fa-vimeo"></i>
+                  </a>
+                  <a href="https://www.pinterest.com/">
+                    <i class="fa fa-pinterest-p"></i>
+                  </a>
+                  <a href="http://www.linkedin.com/">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-copyrights">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    <i class="fa fa-copyright"></i>
+                    <script>
+                      document.write(new Date().getFullYear());
+                    </script>
+                    . Taste of India. All rights reserved. Designed with
+                    <i class="fa fa-heart primary-color"></i> by Ekattor iT
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="b-settings-panel">
+      <div class="settings-section">
+        <span> Boxed </span>
+        <div class="b-switch">
+          <div class="switch-handle"></div>
+        </div>
+        <span> Wide </span>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Main Background</h5>
+      <div class="settings-section bg-list">
+        <div class="bg-wood_pattern"></div>
+        <div class="bg-shattered"></div>
+        <div class="bg-vichy"></div>
+        <div class="bg-random-grey-variations"></div>
+        <div class="bg-irongrip"></div>
+        <div class="bg-gplaypattern"></div>
+        <div class="bg-diamond_upholstery"></div>
+        <div class="bg-denim"></div>
+        <div class="bg-crissXcross"></div>
+        <div class="bg-climpek"></div>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Color Scheme</h5>
+      <div class="settings-section color-list">
+        <div data-src="{% static 'web/css/themes/blue.css' %}" style="background: #45b5f5"></div>
+        <div data-src="{% static 'web/css/themes/brown.css' %}" style="background: #dc8068"></div>
+        <div data-src="{% static 'web/css/themes/cyan.css' %}" style="background: #00becc"></div>
+        <div data-src="{% static 'web/css/themes/green.css' %}" style="background: #5bb75b"></div>
+        <div data-src="{% static 'web/css/themes/orange.css' %}" style="background: #ff7149"></div>
+        <div data-src="{% static 'web/css/themes/pink.css' %}" style="background: #fba1a1"></div>
+        <div data-src="{% static 'web/css/themes/red.css' %}" style="background: #dc3522"></div>
+        <div data-src="{% static 'web/css/themes/yellow.css' %}" style="background: #fdb813"></div>
+      </div>
+      <a data-src="{% static 'web/css/style.css' %}" class="reset"
+        ><span class="bg-wood_pattern">Reset</span></a
+      >
+      <div class="btn-settings"></div>
+    </div>
+
+    <script
+      data-cfasync="false"
+      src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script src="{% static 'web/js/vendor/jquery-1.11.2.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.flexslider-min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/spectragram.js' %}"></script>
+    <script src="{% static 'web/js/vendor/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.ui.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-clockpicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/slick.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/wow.min.js' %}"></script>
+    <script src="{% static 'web/js/animation.js' %}"></script>
+    <script src="{% static 'web/js/vendor/vegas/vegas.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.mb.YTPlayer.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.stellar.js' %}"></script>
+    <script src="{% static 'web/js/main.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/jquery.ketchup.all.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/main.js' %}"></script>
+  </body>
+
+</html>

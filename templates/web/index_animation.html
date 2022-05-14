@@ -1,0 +1,1489 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Taste of India Restaurant</title>
+    <meta name="author" content="Shafayet, Ekattor iT" />
+
+    <meta
+      name="description"
+      content="Taste of India for Restaurants and food related services."
+    />
+    <meta
+      name="keywords"
+      content="Taste of India, responsive, restaurant, food, reservation"
+    />
+
+    <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
+    <link rel="shortcut icon" href="{% static 'web/img/favicon.ico' %}" />
+
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/font-awesome/css/font-awesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/plugin.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/main.css' %}" />
+    <!--[if lt IE 9]>
+      <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
+    <![endif]-->
+  </head>
+  <body data-scroll-animation="true">
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+
+    <div class="preloder animated">
+      <div class="scoket">
+        <img src="{% static 'web/img/preloader.svg' %}" alt="" />
+      </div>
+    </div>
+    <div class="body">
+      <div class="main-wrapper">
+        <nav class="navbar navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{% url 'home' %}">
+                <img
+                  src="{% static 'web/img/svg/White%20logo%20-%20no%20background.svg' %}"
+                  alt="nav-logo"
+                  height="60;"
+                  width="250"
+                />
+              </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'home' %}">Home</a></li>
+
+                <li><a href="{% url 'about' %}">About</a></li>
+
+                <li><a href="{% url 'menu' %}">Menu</a></li>
+
+                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Pages<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="elements.html">Shortcodes</a></li>
+                    <li><a href="shop_account.html">Login / Signup</a></li>
+                    <li><a href="404.html">404 Page</a></li>
+                  </ul>
+                </li>
+
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+
+                <li style="padding-top: 15px">
+                  <button type="button" class="btn btn-danger">
+                    <a href="{% url 'menu' %}" style="color: inherit"
+                      >Order Online</a
+                    >
+                  </button>
+                </li>
+
+                <li style="padding-top: 15px; padding-left: 0px">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#cart"
+                  >
+                    <i class="fa fa-shopping-cart fsc pull-left"></i> (<span
+                      class="total-count"
+                    ></span
+                    >)
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <section class="home">
+          <div class="tittle-block">
+            <div class="logo">
+              <a href="{% url 'home' %}">
+                <img src="{% static 'web/img/logo.png' %}" alt="logo" />
+              </a>
+            </div>
+            <h1>DELICIOUS Food</h1>
+            <h2>Taste of India is a delitious restaurant website</h2>
+          </div>
+          <div class="scroll-down hidden-xs">
+            <a href="#about">
+              <img src="{% static 'web/img/arrow-down.png' %}" alt="down-arrow" />
+            </a>
+          </div>
+        </section>
+
+        <section class="about" id="about">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="page-header wow fadeInDown">
+                  <h1>
+                    the restaurant<small
+                      >A little about us and a breif history of how we
+                      started.</small
+                    >
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div class="row wow fadeInUp">
+              <div class="col-md-4">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-xs-12 hidden-sm about-photo">
+                      <div class="image-thumb">
+                        <img
+                          src="{% static 'web/img/thumb1.png' %}"
+                          data-mfp-src="{% static 'web/img/fullImages/pic1.jpg' %}"
+                          class="img-responsive"
+                          alt="logo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6 about-photo hidden-xs">
+                      <img
+                        src="{% static 'web/img/thumb2.png' %}"
+                        data-mfp-src="{% static 'web/img/fullImages/pic2.jpg' %}"
+                        class="img-responsive"
+                        alt="logo"
+                      />
+                    </div>
+                    <div class="col-sm-6 about-photo hidden-xs">
+                      <img
+                        src="{% static 'web/img/thumb3.png' %}"
+                        data-mfp-src="{% static 'web/img/fullImages/pic3.jpg' %}"
+                        class="img-responsive"
+                        alt="logo"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>
+                  Cras ut viverra eros. Phasellus sollicitudin sapien id luctus
+                  tempor. Sed hendrerit interdum sagittis. Donec nunc lacus,
+                  dapibus nec interdum eget, ultrices eget justo. Nam purus
+                  lacus, efficitur eget laoreet sed, finibus nec neque. Cras
+                  eget enim in diam dapibus sagittis. In massa est, dignissim in
+                  libero ac, fringilla ornare mi. Etiam interdum ligula purus,
+                  placerat aliquam odio faucibus a. Pellentesque et pulvinar
+                  lectus. Fusce scelerisque nisi id nisl gravida ultricies.
+                </p>
+                <br />
+                <p>
+                  Ultrices eget justo. Nam purus lacus, efficitur eget laoreet
+                  sed, finibus nec neque. Cras eget enim in diam dapibus
+                  sagittis. In massa est, dignissim in libero ac, fringilla
+                  ornare mi.
+                </p>
+                <img src="{% static 'web/img/signature.png' %}" alt="signature" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="menu menu2">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="page-header wow fadeInDown">
+                  <h1>
+                    Menu View<small
+                      >These fine folks trusted the award winning
+                      restaurant.</small
+                    >
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div class="food-menu wow fadeInUp">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="menu-tags4">
+                    <span data-filter="*" class="tagsort4-active">All</span>
+                    <span data-filter=".biryani">Biryani</span>
+                    <span data-filter=".curry">Curry Combo</span>
+                    <span data-filter=".vegetable">Vegitable Combo</span>
+                    <span data-filter=".appeitizer">Appetizers</span>
+                    <span data-filter=".extra">Extra Oder</span>
+                    <span data-filter=".drinks">Drinks</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row menu-items4">
+                <!--    biryani-->
+                <div
+                  class="menu-item4 col-sm-3 col-xs-12 biryani dinner desserts"
+                >
+                  <div class="menu-info">
+                    <img
+                      src="{% static 'web/img/menu/3/chiken-salad.jpeg' %}"
+                      class="img-responsive"
+                      alt=""
+                    />
+                    <a href="{% url 'menu' %}">
+                      <div class="menu4-overlay">
+                        <h4>Biryani</h4>
+                        <p>Chicken Biryani with Raita and salad</p>
+                        <span class="price">$ 13.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="{% url 'shop-cart' %}" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 biryani">
+                  <div class="menu-info">
+                    <a href="{% url 'menu' %}">
+                      <img
+                        src="{% static 'web/img/menu/3/goat-salad.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Biryani</h4>
+                        <p>Lamb/Goat Biryani with Raita and salad</p>
+                        <span class="price">$ 17.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="{% url 'shop-cart' %}" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="menu-item4 col-sm-3 col-xs-12 breakfast desserts biryani"
+                >
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/beef-salad.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Biryani</h4>
+                        <p>Beef Biryani with Raita and salad</p>
+                        <span class="price">$ 15.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 biryani">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/vegetable-salad.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Biryani</h4>
+                        <p>Vegetable Biryani with Raita and salad</p>
+                        <span class="price">$ 15.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <!--    curry combo-->
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/chicken-butter.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Curry combo</h4>
+                        <p>Butter Chicken with Basmati rice or tandoori naan</p>
+                        <span class="price">$ 13.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 curry">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/chicken-tikka.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Curry combo</h4>
+                        <p>
+                          Chicken Tikka Masala with Basmati rice or tandoori
+                          naan
+                        </p>
+                        <span class="price">$ 13.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/chicken-curry.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Curry combo</h4>
+                        <p>Chicken curry with Basmati rice or tandoori naan</p>
+                        <span class="price">$ 13.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/beef-curry.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Curry combo</h4>
+                        <p>Beef curry with Basmati rice or tandoori naan</p>
+                        <span class="price">$ 14.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/goat-curry.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Curry combo</h4>
+                        <p>Goat curry with Basmati rice or tandoori naan</p>
+                        <span class="price">$ 15.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Curry combo</h4>
+                        <p>
+                          Fish curry (Pompano) with Basmati rice or tandoori
+                          naan
+                        </p>
+                        <span class="price">$ 13.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Curry combo</h4>
+                        <p>Egg curry with Basmati rice or tandoori naan</p>
+                        <span class="price">$ 13.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <!--    vegetable combo-->
+                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/mixed_vegetable.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Vegetable combo</h4>
+                        <p>
+                          Mixed vegetable with Basmati rice + 1 side (lentil or
+                          chickpeas)
+                        </p>
+                        <span class="price">$ 11.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/Cheakpeas.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Vegetable combo</h4>
+                        <p>
+                          Cheakpeas with Basmati rice + 1 side (mixed vegetable
+                          or lentil)
+                        </p>
+                        <span class="price">$ 11.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'img/menu/3/palak-paneer.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Vegetable combo</h4>
+                        <p>
+                          Palak Paneer with Basmati rice + 1 side (mixed
+                          vegetable, chickpeas or lentil)
+                        </p>
+                        <span class="price">$ 11.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/lentil.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Vegetable combo</h4>
+                        <p>
+                          Lentil with Basmati rice +1 side (mixed vegetable,
+                          chickpeas or lentil)
+                        </p>
+                        <span class="price">$ 11.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch vegetable">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/vegetable-salad.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Vegetable combo</h4>
+                        <p>Vegetable Biryani with Raita and salad</p>
+                        <span class="price">$ 15.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <!--    appeitizer-->
+                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/somosa.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Appeitizers</h4>
+                        <p>Samosa- (chicken/beef/lamb/vegetable)</p>
+                        <span class="price">2 for $ 5</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/singara.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Appeitizers</h4>
+                        <p>Singara- (Bangladeshi style with special chatney)</p>
+                        <span class="price">2 for $ 5</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/egg-roll.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Appeitizers</h4>
+                        <p>Egg roll</p>
+                        <span class="price">2 for $ 5</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/roll.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Appeitizers</h4>
+                        <p>Spring roll</p>
+                        <span class="price">3 for $ 5</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/roll.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Appeitizers</h4>
+                        <p>Shami Kabab- (chicken/beef/chapli)</p>
+                        <span class="price">$ 2.50</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/fuska-panipuri.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Appeitizers</h4>
+                        <p>Chatpoti- (Fuchka/panipuri)</p>
+                        <span class="price">$ 13.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 lunch appeitizer">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/but-muri.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Appeitizers</h4>
+                        <p>Boot-Muri</p>
+                        <span class="price">$ 9.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <!--    extra-->
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/ex-basmoti.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Basmati rice</p>
+                        <span class="price">$ 4.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/ex-butter.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Butter chicken</p>
+                        <span class="price">$ 7.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/ex-tikka.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Chicken tikka masala</p>
+                        <span class="price">$ 7.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/ex-chicken.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Chicken curry</p>
+                        <span class="price">$ 7.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/beef-curry.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Beef curry</p>
+                        <span class="price">$ 7.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/ex-goat.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Goat curry</p>
+                        <span class="price">$ 7.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Fish curry</p>
+                        <span class="price">$ 7.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Egg curry</p>
+                        <span class="price">$ 7.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/palak-paneer.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Palak paneer</p>
+                        <span class="price">$ 6.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/ex-checkpeas.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Chickpeas</p>
+                        <span class="price">$ 6.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 extra">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/lentil.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Extra order</h4>
+                        <p>Lentil (Dal)</p>
+                        <span class="price">$ 6.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <!--    drinks-->
+                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
+                  <div class="menu-info">
+                    <a href="menu_all.html">
+                      <img
+                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Drinks</h4>
+                        <p>Mango lassi</p>
+                        <span class="price">$ 3.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Drinks</h4>
+                        <p>Bottle soda</p>
+                        <span class="price">$ 2.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Drinks</h4>
+                        <p>Bottle soda</p>
+                        <span class="price">$ 1.50</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Drinks</h4>
+                        <p>Can soda</p>
+                        <span class="price">$ 1.50</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Drinks</h4>
+                        <p>Tea (masala chai)</p>
+                        <span class="price">$ 3.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
+                  <div class="menu-info">
+                    <a href="menu_grid.html">
+                      <img
+                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
+                        class="img-responsive"
+                        alt=""
+                      />
+                      <div class="menu4-overlay">
+                        <h4>Drinks</h4>
+                        <p>Coffee</p>
+                        <span class="price">$ 3.99</span>
+                        <button type="button" class="btn btn-info">
+                          Add Cart
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success">
+                          <a href="shop_cart.html" style="color: inherit"
+                            >Buy Now</a
+                          ></button
+                        ><br /><br />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <!--    menu ends-->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="cart"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="show-cart table"></table>
+                <div>Total price: $<span class="total-cart"></span></div>
+              </div>
+              <div class="modal-footer">
+                <button class="clear-cart btn btn-danger">Clear Cart</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary">Order now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END EDMO HTML (Happy Coding!)-->
+
+        <section class="instagram">
+          <div
+            id="instafeed"
+            data-username="instaphotosdemo"
+            data-access-token="3401121086.ca9c5d8.49a154f2d6034846ae4e37962de804e8"
+            data-client-id="a42e80c86661419b94a5ac01dc022221"
+          ></div>
+        </section>
+
+        <section class="footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <h1>About us</h1>
+                <p>
+                  Taste of India is not only a name. It is the representation of
+                  of South Asian delicious food. Tysons Corner Center is a place
+                  with an excellent demographic diversity. Our restaurant is at
+                  the food court (3rd floor) of the mall.
+                </p>
+                <a href="about.html">Read more &rarr;</a>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <!--empty div-->
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <h1>Reach us</h1>
+
+                <div class="footer-address">
+                  <p>
+                    <i class="fa fa-map-marker"></i>3200 S AIRPORT RD W,<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp; TRAVERSE CITY MI
+                  </p>
+                  <p><i class="fa fa-phone"></i>Phone: (929) 346-2200</p>
+                  <p>
+                    <i class="fa fa-envelope-o"></i
+                    ><a
+                      href="https://demo.web3canvas.com/cdn-cgi/l/email-protection"
+                      class="__cf_email__"
+                      data-cfemail="c7b4b2b7b7a8b5b387b5a2b4b3a6b2b5a6a9b3e9a4a8aa"
+                      >[email&#160;protected]</a
+                    >
+                  </p>
+                </div>
+
+                <div class="footer-social-icons">
+                  <a href="https://www.facebook.com/">
+                    <i class="fa fa-facebook-square"></i>
+                  </a>
+                  <a href="https://www.twitter.com/">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                  <a href="https://plus.google.com/">
+                    <i class="fa fa-google"></i>
+                  </a>
+                  <a href="https://www.youtube.com/">
+                    <i class="fa fa-youtube-play"></i>
+                  </a>
+                  <a href="https://www.vimeo.com/">
+                    <i class="fa fa-vimeo"></i>
+                  </a>
+                  <a href="https://www.pinterest.com/">
+                    <i class="fa fa-pinterest-p"></i>
+                  </a>
+                  <a href="http://www.linkedin.com/">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-copyrights">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    <i class="fa fa-copyright"></i>
+                    <script>
+                      document.write(new Date().getFullYear());
+                    </script>
+                    . Taste of India. All rights reserved. Designed with
+                    <i class="fa fa-heart primary-color"></i> by Ekattor iT
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="b-settings-panel">
+      <div class="settings-section">
+        <span> Boxed </span>
+        <div class="b-switch">
+          <div class="switch-handle"></div>
+        </div>
+        <span> Wide </span>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Main Background</h5>
+      <div class="settings-section bg-list">
+        <div class="bg-wood_pattern"></div>
+        <div class="bg-shattered"></div>
+        <div class="bg-vichy"></div>
+        <div class="bg-random-grey-variations"></div>
+        <div class="bg-irongrip"></div>
+        <div class="bg-gplaypattern"></div>
+        <div class="bg-diamond_upholstery"></div>
+        <div class="bg-denim"></div>
+        <div class="bg-crissXcross"></div>
+        <div class="bg-climpek"></div>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Color Scheme</h5>
+      <div class="settings-section color-list">
+        <div data-src="{% static 'web/css/themes/blue.css' %}" style="background: #45b5f5"></div>
+        <div data-src="{% static 'web/css/themes/brown.css' %}" style="background: #dc8068"></div>
+        <div data-src="{% static 'web/css/themes/cyan.css' %}" style="background: #00becc"></div>
+        <div data-src="{% static 'web/css/themes/green.css' %}" style="background: #5bb75b"></div>
+        <div data-src="{% static 'web/css/themes/orange.css' %}" style="background: #ff7149"></div>
+        <div data-src="{% static 'web/css/themes/pink.css' %}" style="background: #fba1a1"></div>
+        <div data-src="{% static 'web/css/themes/red.css' %}" style="background: #dc3522"></div>
+        <div data-src="{% static 'web/css/themes/yellow.css' %}" style="background: #fdb813"></div>
+      </div>
+      <a data-src="{% static 'web/css/style.css' %}" class="reset"
+        ><span class="bg-wood_pattern">Reset</span></a
+      >
+      <div class="btn-settings"></div>
+    </div>
+
+    <script
+      data-cfasync="false"
+      src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script src="{% static 'web/js/vendor/jquery-1.11.2.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.flexslider-min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/spectragram.js' %}"></script>
+    <script src="{% static 'web/js/vendor/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.ui.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-clockpicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/slick.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/wow.min.js' %}"></script>
+    <script src="{% static 'web/js/animation.js' %}"></script>
+    <script src="{% static 'web/js/vendor/vegas/vegas.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.mb.YTPlayer.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.stellar.js' %}"></script>
+    <script src="{% static 'web/js/main.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/jquery.ketchup.all.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/main.js' %}"></script>
+
+    <script src="{% static './web/js/script.js' %}"></script>
+  </body>
+</html>

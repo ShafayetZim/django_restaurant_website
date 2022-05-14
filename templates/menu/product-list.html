@@ -1,0 +1,81 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="">
+                                            <a href="{% url 'product-create' %}" class="btn btn-primary mb-3"><i class="mdi mdi-plus me-2"></i> New Product</a>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Category</th>
+                                                        <th>Price</th>
+                                                        <th>Image</th>
+                                                        <th>Description</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                {% for item in product %}
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">{{forloop.counter}}</th>
+                                                        <td>{{item.product_name}}</td>
+                                                        <td>{{item.category}}</td>
+                                                        <td>{{item.price}}</td>
+                                                        <td><img src="{{ item.image.url }}" alt=""  height="100" /></td>
+                                                        <td>{{item.desc}}</td>
+                                                        <td>
+                                                            <a href="">
+                                                                <button class="btn btn-outline-info">Edit</button>
+                                                            </a>
+                                                            <button class="btn btn-outline-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#composemodal{{item.id}}">
+                                                                    <i class="mdi mdi-trash-can"></i>
+                                                                </button>
+
+                                                            <!-- Modal -->
+                                                        <div class="modal fade" id="composemodal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="composemodalTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="composemodalTitle">Delete Invoice</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <h5 class="text-center p-2">Product: {{item.product_name}}</h5>
+                                                                        <p class="text-center p-2">You are going to delete this product from database.</p>
+                                                                        <p class="text-center p-2">Deleting it will delete relevant entries from related tables.</p>
+                                                                        <p class="text-center p-2">This process can not be undone.</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        <!-- <button type="button" class="btn btn-primary">Send <i class="fab fa-bs-telegram-plane ms-1"></i></button>-->
+                                                                        <a href=""
+                                           class="btn btn-danger">Delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <!-- Modal end-->
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+{% endblock content %}

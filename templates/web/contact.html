@@ -1,0 +1,551 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Taste of india Restaurant</title>
+    <meta name="author" content="Shafayet, Ekattor iT" />
+
+    <meta
+      name="description"
+      content="Taste of India for Restaurants and food related services."
+    />
+    <meta
+      name="keywords"
+      content="taste of india, responsive, restaurant, food, reservation"
+    />
+
+    <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
+    <link rel="shortcut icon" href="{% static 'web/img/favicon.ico' %}" />
+
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/font-awesome/css/font-awesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/plugin.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/main.css' %}" />
+    <!--[if lt IE 9]>
+      <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+
+    <div class="preloder animated">
+      <div class="scoket">
+        <img src="{% static 'web/img/preloader.svg' %}" alt="" />
+      </div>
+    </div>
+    <div class="body">
+      <div class="main-wrapper">
+        <nav class="navbar navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{% url 'home' %}">
+                <img
+                  src="{% static 'web/img/svg/White%20logo%20-%20no%20background.svg' %}"
+                  alt="nav-logo"
+                  height="60"
+                  ;
+                  width="250"
+                />
+              </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'home' %}">Home</a></li>
+
+                <li><a href="{% url 'about' %}">About</a></li>
+
+                <li><a href="{% url 'menu' %}">Menu</a></li>
+
+                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Pages<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="elements.html">Shortcodes</a></li>
+                    <li><a href="shop_account.html">Login / Signup</a></li>
+                    <li><a href="404.html">404 Page</a></li>
+                  </ul>
+                </li>
+
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+
+                <li><a href="contact.html">Contact</a></li>
+
+                {% if user.is_authenticated %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >{{request.user}}<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="logout/">Logout</a></li>
+                  </ul>
+                </li>
+                {% else %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Log In<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><button type="button" style="width:160px; border-bottom: 1px solid white;" class="btn btn-success mx-2" data-toggle="modal" data-target="#loginModal">Login</button></li>
+
+                <li><button type="button" style="width:160px;" class="btn btn-success mx-2" data-toggle="modal" data-target="#signupModal">SignUp</button></li>
+                  </ul>
+                </li>
+                {% endif %}
+
+                <li style="padding-top: 15px">
+                  <button type="button" class="btn btn-danger">
+                    <a href="menu_grid.html" style="color: inherit"
+                      >Order Online</a
+                    >
+                  </button>
+                </li>
+                <li style="padding-top:15px;"><button type="button" class="btn btn-primary mx-2" id="popcart" data-container="body" data-html="true" data-toggle="popover" title="MyCart" data-placement="bottom" data-content="Bottom popover">
+                <i class="fa fa-shopping-cart fsc pull-left"></i>(<span id="cart">0</span>)
+              </button></li>
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <section class="page_header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h2 class="text-uppercase">Contact</h2>
+                <p>Taste of India is a delicious restaurant website template</p>
+                <button type="button" class="btn btn-warning">
+                  <a href="{% url 'menu' %}" style="color: inherit"
+                    >Order Online</a
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: rgb(111 202 203);">
+            <h5 class="modal-title" id="loginModal">Login Here</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="login/" method="post">{% csrf_token %}
+              <div class="text-left my-2">
+                  <b><label for="username">Username</label></b>
+                  <input class="form-control" id="loginusername" name="loginusername" placeholder="Enter Your Username" type="text" required pattern="^[a-z]{3,15}$">
+              </div>
+              <div class="text-left my-2">
+                  <b><label for="password">Password</label></b>
+                  <input class="form-control" id="loginpassword" name="loginpassword" placeholder="Enter Your Password" type="password" required data-toggle="password">
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+              <a href="/shop/reset_password/" style="padding-left: 250px;">Forgot password?</a>
+            </form>
+            <p class="mb-0 mt-1">Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signupModal">Sign up now</a>.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sign up Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: rgb(111 202 203);">
+            <h5 class="modal-title" id="signupModal">SignUp Here</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="signup/" method="post">{% csrf_token %}
+              <div class="form-group">
+                  <b><label for="username">Username</label></b>
+                  <input class="form-control" id="username" name="username" placeholder="Choose a unique Username" type="text" required pattern="^[a-z]{3,15}$">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <b><label for="f_name">First Name:</label></b>
+                  <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First Name" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <b><label for="l_name">Last name:</label></b>
+                  <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last name" required>
+                </div>
+              </div>
+              <div class="form-group">
+                  <b><label for="email1">Email:</label></b>
+                  <input type="email" class="form-control" id="email1" name="email1" placeholder="Enter Your Email" required>
+              </div>
+              <div class="form-group">
+                <b><label for="phone">Phone No:</label></b>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon">+91</span>
+                  </div>
+                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Phone Number" required pattern="[0-9]{10}">
+                </div>
+              </div>
+              <div class="text-left my-2">
+                  <b><label for="password">Password:</label></b>
+                  <input class="form-control" id="password" name="password" placeholder="Enter Password" type="password" required data-toggle="password">
+              </div>
+              <div class="text-left my-2">
+                  <b><label for="password1">Renter Password:</label></b>
+                  <input class="form-control" id="password1" name="password1" placeholder="Renter Password" type="password" required data-toggle="password">
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+            <p class="mb-0 mt-1">Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login here</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+        <section class="main-content contact-content">
+          <div class="container">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3 class="text-left no-margin-top">Address</h3>
+                  <div class="footer-address contact-info">
+                    <p>
+                      <i class="fa fa-map-marker"></i>3200 S AIRPORT RD W,<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp; TRAVERSE CITY MI
+                    </p>
+                    <p><i class="fa fa-phone"></i>Phone: (929) 346-2200</p>
+                    <p>
+                      <i class="fa fa-envelope-o"></i
+                      ><a
+                        href="https://demo.web3canvas.com/cdn-cgi/l/email-protection"
+                        class="__cf_email__"
+                        data-cfemail="8bf8fefbfbe4f9ffcbf9eef8ffeafef9eae5ffa5e8e4e6"
+                        >[email&#160;protected]</a
+                      >
+                    </p>
+                  </div>
+                  <br />
+                  <h3 class="text-left no-margin-top">Working hours</h3>
+                  <div class="contact-info text-muted">
+                    <p>10:00 am to 11:00 pm on Weekdays</p>
+                    <p>11:00 am to 11:30 pm on Weekends</p>
+                  </div>
+                  <br />
+                  <h3 class="text-left no-margin-top">Follow Us</h3>
+                  <div class="contact-social">
+                    <a href="https://www.facebook.com/"
+                      ><i class="fa fa-facebook"></i
+                    ></a>
+                    <a href="https://www.twitter.com/"
+                      ><i class="fa fa-twitter"></i
+                    ></a>
+                    <a href="https://www.dribbble.com/"
+                      ><i class="fa fa-dribbble"></i
+                    ></a>
+                    <a href="https://www.instagram.com/"
+                      ><i class="fa fa-instagram"></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <form
+                    class="contact-form"
+                    id="contactForm"
+                    action="https://demo.web3canvas.com/themeforest/tomato/php/contact.php"
+                    method="post"
+                  >
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        placeholder="Full Name"
+                        type="text"
+                        required="required"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Email Address"
+                        required="required"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        placeholder="Subject"
+                        type="text"
+                        id="subject"
+                        name="subject"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <textarea
+                        class="form-control"
+                        name="message"
+                        id="message"
+                        placeholder="Message"
+                        rows="5"
+                      ></textarea>
+                    </div>
+                    <button
+                      class="btn btn-default btn-lg btn-block"
+                      id="js-contact-btn"
+                    >
+                      Send message
+                    </button>
+                  </form>
+                  <div
+                    id="js-contact-result"
+                    data-success-msg="Form submitted successfully."
+                    data-error-msg="Oops. Something went wrong."
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal -->
+
+            <!-- END EDMO HTML (Happy Coding!)-->
+          </div>
+        </section>
+
+        <div id="map" data-latitude="40.6700" data-longitude="-73.9400"></div>
+
+        <section class="footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <h1>About us</h1>
+                <p>
+                  Taste of India is not only a name. It is the representation of
+                  of South Asian delicious food. Tysons Corner Center is a place
+                  with an excellent demographic diversity. Our restaurant is at
+                  the food court (3rd floor) of the mall.
+                </p>
+                <a href="about.html">Read more &rarr;</a>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <!--empty div-->
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <h1>Reach us</h1>
+
+                <div class="footer-address">
+                  <p>
+                    <i class="fa fa-map-marker"></i>3200 S AIRPORT RD W,<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp; TRAVERSE CITY MI
+                  </p>
+                  <p><i class="fa fa-phone"></i>Phone: (929) 346-2200</p>
+                  <p>
+                    <i class="fa fa-envelope-o"></i
+                    ><a
+                      href="https://demo.web3canvas.com/cdn-cgi/l/email-protection"
+                      class="__cf_email__"
+                      data-cfemail="e1929491918e9395a193849295809493808f95cf828e8c"
+                      >[email&#160;protected]</a
+                    >
+                  </p>
+                </div>
+
+                <div class="footer-social-icons">
+                  <a href="https://www.facebook.com/">
+                    <i class="fa fa-facebook-square"></i>
+                  </a>
+                  <a href="https://www.twitter.com/">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                  <a href="https://plus.google.com/">
+                    <i class="fa fa-google"></i>
+                  </a>
+                  <a href="https://www.youtube.com/">
+                    <i class="fa fa-youtube-play"></i>
+                  </a>
+                  <a href="https://www.vimeo.com/">
+                    <i class="fa fa-vimeo"></i>
+                  </a>
+                  <a href="https://www.pinterest.com/">
+                    <i class="fa fa-pinterest-p"></i>
+                  </a>
+                  <a href="http://www.linkedin.com/">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-copyrights">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    <i class="fa fa-copyright"></i>
+                    <script>
+                      document.write(new Date().getFullYear());
+                    </script>
+                    . Taste of India. All rights reserved. Designed with
+                    <i class="fa fa-heart primary-color"></i> by Ekattor iT
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="b-settings-panel">
+      <div class="settings-section">
+        <span> Boxed </span>
+        <div class="b-switch">
+          <div class="switch-handle"></div>
+        </div>
+        <span> Wide </span>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Main Background</h5>
+      <div class="settings-section bg-list">
+        <div class="bg-wood_pattern"></div>
+        <div class="bg-shattered"></div>
+        <div class="bg-vichy"></div>
+        <div class="bg-random-grey-variations"></div>
+        <div class="bg-irongrip"></div>
+        <div class="bg-gplaypattern"></div>
+        <div class="bg-diamond_upholstery"></div>
+        <div class="bg-denim"></div>
+        <div class="bg-crissXcross"></div>
+        <div class="bg-climpek"></div>
+      </div>
+      <hr class="dashed" style="margin: 15px 0px" />
+      <h5>Color Scheme</h5>
+      <div class="settings-section color-list">
+        <div data-src="{% static 'web/css/themes/blue.css' %}" style="background: #45b5f5"></div>
+        <div data-src="{% static 'web/css/themes/brown.css' %}" style="background: #dc8068"></div>
+        <div data-src="{% static 'web/css/themes/cyan.css' %}" style="background: #00becc"></div>
+        <div data-src="{% static 'web/css/themes/green.css' %}" style="background: #5bb75b"></div>
+        <div data-src="{% static 'web/css/themes/orange.css' %}" style="background: #ff7149"></div>
+        <div data-src="{% static 'web/css/themes/pink.css' %}" style="background: #fba1a1"></div>
+        <div data-src="{% static 'web/css/themes/red.css' %}" style="background: #dc3522"></div>
+        <div data-src="{% static 'web/css/themes/yellow.css' %}" style="background: #fdb813"></div>
+      </div>
+      <a data-src="web/css/style.css" class="reset"
+        ><span class="bg-wood_pattern">Reset</span></a
+      >
+      <div class="btn-settings"></div>
+    </div>
+
+    <script
+      data-cfasync="false"
+      src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="{% static 'web/js/vendor/jquery-1.11.2.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="{% static 'web/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.flexslider-min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/spectragram.js' %}"></script>
+    <script src="{% static 'web/js/vendor/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/velocity.ui.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/bootstrap-clockpicker.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/slick.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/wow.min.js' %}"></script>
+    <script src="{% static 'web/js/animation.js' %}"></script>
+    <script src="{% static 'web/js/vendor/vegas/vegas.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.mb.YTPlayer.js' %}"></script>
+    <script src="{% static 'web/js/vendor/jquery.stellar.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/jquery.ketchup.all.min.js' %}"></script>
+    <script src="{% static 'web/js/vendor/mc/main.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="{% static 'web/js/vendor/map.js' %}"></script>
+
+    <script src="{% static 'web/js/vendor/validate.js' %}"></script>
+    <script src="{% static 'web/js/contact.js' %}"></script>
+
+    <script src="{% static 'web/js/main.js' %}"></script>
+    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+
+<!--    <script src="{% static './web/js/script.js' %}"></script>-->
+
+  <script>
+
+$('#popcart').popover();
+updatePopover(cart);
+
+function updatePopover(cart) {
+    var popStr = "";
+    popStr = popStr + "<h5> Click <a href='/shop_checkout'><button class='btn btn-primary'>Here</button></a> to order </h5><div class='mx-2 my-2'>";
+    document.getElementById("popcart").setAttribute('data-content', popStr);
+    $('#popcart').popover();
+}
+
+{% if thank %}
+alert('Thanks for Contact with us. We will get back to you soon!');
+document.location = "/shop";
+{% endif %}
+
+</script>
+  </body>
+</html>
