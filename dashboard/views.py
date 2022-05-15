@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from .forms import *
 from django.contrib import messages
@@ -39,3 +39,29 @@ class ProductListView(View):
             'pageview': "Product"
         }
         return render(request, 'menu/product-list.html', context)
+
+
+# product-edit
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductCreateForm
+    success_url = reverse_lazy('dash-product')
+    template_name = 'menu/edit-product.html'
+
+    success_message = "Product was updated successfully"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+        context["title"] = "Update Product"
+        context["pageview"] = "Product"
+        return context
+
+
+# product-delete
+def product_delete(request, order_no):
+    if request.method == 'GET':
+        instance = Product.objects.get(pk=id)
+        instance.delete()
+        messages.add_message(request, messages.WARNING, 'Delete Success')
+        return redirect('product-list')
