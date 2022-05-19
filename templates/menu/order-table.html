@@ -1,0 +1,168 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+
+        <!-- DataTables -->
+        <link href="{% static 'libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'libs/datatables.net-select-bs4/css//select.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+
+        <!-- Responsive datatable examples -->
+        <link href="{% static 'libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+
+{% endblock extra_css %}
+
+{% block content %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="col-sm-6 col-md-4 col-xl-3">
+
+
+                                                <!--  Modal content for the above example -->
+                                                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="myLargeModalLabel">Items</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div id = "citems"></div>
+
+                                                            </div>
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal -->
+                                            </div>
+
+
+                                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>SL</th>
+                                                <th>Order</th>
+                                                <th>Date</th>
+                                                <th>Name</th>
+                                                <th>Phone</th>
+                                                <th>Total</th>
+                                                <th>Items</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for item in order %}
+                                            <tr>
+                                                <td>{{ forloop.counter}}</td>
+                                                <td>{{ item.order_id }}</td>
+                                                <td>{{ item.timestamp }}</td>
+                                                <td>{{ item.name }}</td>
+                                                <td>{{ item.phone }}</td>
+                                                <td>{{ item.amount }}</td>
+                                                <td><button type="button" id="click{{item.order_id}}" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg">
+                                                                <i class="material-icons">&#xE5C8;</i></button></td>
+
+                                                        </td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+
+
+                        <!-- end row-->
+                        <!-- end row-->
+                        <!-- end row-->
+                        <!-- end row-->
+                        <!-- end row-->
+                        <!-- end row-->
+
+<script>
+    $(document).ready(function() {
+    $('#datatable').DataTable( {
+        "order": [[ 0, "desc" ]]
+    } );
+} );
+</script>
+
+{% endblock content %}
+
+{% block extra_javascript %}
+
+        <!-- Required datatable js -->
+        <script src="{% static 'libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+        <!-- Buttons examples -->
+        <script src="{% static 'libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'libs/jszip/jszip.min.js' %}"></script>
+        <script src="{% static 'libs/pdfmake/build/pdfmake.min.js' %}"></script>
+        <script src="{% static 'libs/pdfmake/build/vfs_fonts.js' %}"></script>
+        <script src="{% static 'libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+        <script src="{% static 'libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+
+        <script src="{% static 'libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+        <script src="{% static 'libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+
+        <!-- Responsive examples -->
+        <script src="{% static 'libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+        <!-- Datatable init js -->
+        <script src="{% static 'js/pages/datatables.init.js' %}"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+    <script>
+
+    {% for i in order %}
+
+    $('#click{{i.order_id}}').click(function() {
+        $('#citems').empty();
+        myid = `<div><b>Order Id: {{i.order_id}}</b></div>`
+        $('#citems').append(myid)
+        mydata = "{{i.items_json}}";
+        var mydata = mydata.replace(/&quot;/g, '"');
+        obj = JSON.parse(mydata)
+        // console.log(obj)
+        var sum = 0;
+        var sumPrice = 0;
+        for (item in obj) {
+            let name = obj[item][1];
+            let qty = obj[item][0];
+            let itemPrice = obj[item][2];
+            sum = sum + qty;
+            sumPrice = qty * itemPrice;
+            mystr =  `<li class="list-group-item d-flex align-items-center">
+                        ${name}
+                        <span class="">${qty} x Rs. ${itemPrice} = <span class="" style="font-size: 0.8rem;">Rs. ${sumPrice}</span> </span>
+                        </li>`
+            $('#citems').append(mystr)
+        }
+    });
+    {% endfor %}
+
+    $('#popcart').popover();
+    updatePopover(cart);
+
+    function updatePopover(cart) {
+        var popStr = "";
+        popStr = popStr + "<h5> Click <a href='/shop/checkout'><button class='btn btn-primary'>Here</button></a> to order </h5><div class='mx-2 my-2'>";
+        document.getElementById("popcart").setAttribute('data-content', popStr);
+        $('#popcart').popover();
+    }
+
+</script>
+
+
+{% endblock extra_javascript %}
