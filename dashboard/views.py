@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from .models import *
 from .forms import *
 from django.contrib import messages
-from django.views.generic import UpdateView, CreateView
+from django.views.generic import UpdateView, CreateView, ListView
 from django.urls import reverse_lazy
 
 
@@ -41,10 +42,10 @@ class ProductListView(View):
         return render(request, 'menu/product-list.html', context)
 
 
-# product-edit
+# edit-product
 class ProductUpdateView(UpdateView):
     model = Product
-    form_class = ProductCreateForm
+    form_class = ProductUpdateForm
     success_url = reverse_lazy('dash-product')
     template_name = 'menu/edit-product.html'
 
@@ -59,9 +60,53 @@ class ProductUpdateView(UpdateView):
 
 
 # product-delete
-def product_delete(request, order_no):
+def product_delete(request, id):
     if request.method == 'GET':
-        instance = Product.objects.get(pk=id)
+        instance = Product.objects.get(id=id)
         instance.delete()
         messages.add_message(request, messages.WARNING, 'Delete Success')
-        return redirect('product-list')
+        return redirect('dash-product')
+
+
+# order list view
+class OrderListView(ListView, ):
+    model = Orders  # Model I want to Covert to List
+    template_name = 'menu/order-table.html'  # Template Name
+    context_object_name = 'order'  # Change default name of objectList
+    ordering = ['-timestamp', '-order_id']  # Ordering post LIFO
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Order Table"
+        context["pageview"] = "Order"
+        return context
+
+
+# tracking list view
+class TrackingListView(ListView, ):
+    model = OrderUpdate  # Model I want to Covert to List
+    template_name = 'menu/order-tracking.html'  # Template Name
+    context_object_name = 'tracking'  # Change default name of objectList
+    ordering = ['-timestamp', '-order_id']  # Ordering post LIFO
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Order Tracking"
+        context["pageview"] = "Order"
+        return context
+
+
+class TrackingChangeView( UpdateView):
+    model = OrderUpdate
+    form_class = TrackingForm
+    success_url = reverse_lazy('order-tracking')
+    template_name = 'menu/change-tracking.html'
+
+    success_message = "Order Tracking was updated successfully"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+        context["title"] = "Change Tracking"
+        context["pageview"] = "Tracking List"
+        return context
