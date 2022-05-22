@@ -63,7 +63,7 @@
               </button>
               <a class="navbar-brand" href="{% url 'home' %}">
                 <img
-                  src="{% static 'web/img/svg/White%20logo%20-%20no%20background.svg' %}"
+                  src="{% static 'web/img/svg/White-logo-no-background.svg' %}"
                   alt="nav-logo"
                   height="60"
                   ;
@@ -89,12 +89,11 @@
                     role="button"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    >Pages<span class="caret"></span
+                    >Orders<span class="caret"></span
                   ></a>
                   <ul class="dropdown-menu">
-                    <li><a href="elements.html">Shortcodes</a></li>
-                    <li><a href="shop_account.html">Login / Signup</a></li>
-                    <li><a href="404.html">404 Page</a></li>
+                    <li><a href="orderView">Order History</a></li>
+                    <li><a href="tracker">Track Order</a></li>
                   </ul>
                 </li>
 
@@ -102,27 +101,53 @@
 
                 <li><a href="{% url 'contact' %}">Contact</a></li>
 
+                {% if user.is_authenticated %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >{{request.user}}<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="logout/">Logout</a></li>
+                  </ul>
+                </li>
+                {% else %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Log In<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><button type="button" style="width:160px; border-bottom: 1px solid white;" class="btn btn-success mx-2" data-toggle="modal" data-target="#loginModal">Login</button></li>
+
+                <li><button type="button" style="width:160px;" class="btn btn-success mx-2" data-toggle="modal" data-target="#signupModal">SignUp</button></li>
+                  </ul>
+                </li>
+                {% endif %}
+
                 <li style="padding-top: 15px">
                   <button type="button" class="btn btn-danger">
-                    <a href="{% url 'menu' %}" style="color: inherit"
+                    <a href="menu" style="color: inherit"
                       >Order Online</a
                     >
                   </button>
                 </li>
+                <li style="padding-top:15px;"><button type="button" class="btn btn-primary mx-2" id="popcart" data-container="body" data-html="true" data-toggle="popover" title="MyCart" data-placement="bottom" data-content="Bottom popover">
+                <i class="fa fa-shopping-cart fsc pull-left"></i>(<span id="cart">0</span>)
+              </button></li>
 
-                <li style="padding-top: 15px; padding-left: 0px">
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-toggle="modal"
-                    data-target="#cart"
-                  >
-                    <i class="fa fa-shopping-cart fsc pull-left"></i> (<span
-                      class="total-count"
-                    ></span
-                    >)
-                  </button>
-                </li>
               </ul>
             </div>
           </div>
@@ -391,45 +416,7 @@
         </div>
 
         <!-- Modal -->
-        <div
-          class="modal fade"
-          id="cart"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <table class="show-cart table"></table>
-                <div>Total price: $<span class="total-cart"></span></div>
-              </div>
-              <div class="modal-footer">
-                <button class="clear-cart btn btn-danger">Clear Cart</button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">Order now</button>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <!-- END EDMO HTML (Happy Coding!)-->
 
         <section class="footer">
@@ -581,6 +568,6 @@
     <script src="{% static 'web/js/vendor/mc/jquery.ketchup.all.min.js' %}"></script>
     <script src="{% static 'web/js/vendor/mc/main.js' %}"></script>
 
-    <script src="{% static './web/js/script.js' %}"></script>
+<!--    <script src="{% static './web/js/script.js' %}"></script>-->
   </body>
 </html>
