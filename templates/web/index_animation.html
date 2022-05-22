@@ -63,9 +63,9 @@
               </button>
               <a class="navbar-brand" href="{% url 'home' %}">
                 <img
-                  src="{% static 'web/img/svg/White%20logo%20-%20no%20background.svg' %}"
+                  src="{% static 'web/img/svg/White-logo-no-background.svg' %}"
                   alt="nav-logo"
-                  height="60;"
+                  height="40"
                   width="250"
                 />
               </a>
@@ -88,12 +88,11 @@
                     role="button"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    >Pages<span class="caret"></span
+                    >Orders<span class="caret"></span
                   ></a>
                   <ul class="dropdown-menu">
-                    <li><a href="elements.html">Shortcodes</a></li>
-                    <li><a href="shop_account.html">Login / Signup</a></li>
-                    <li><a href="404.html">404 Page</a></li>
+                    <li><a href="orderView">Order History</a></li>
+                    <li><a href="tracker">Track Order</a></li>
                   </ul>
                 </li>
 
@@ -101,27 +100,53 @@
 
                 <li><a href="{% url 'contact' %}">Contact</a></li>
 
+                {% if user.is_authenticated %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >{{request.user}}<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="logout/">Logout</a></li>
+                  </ul>
+                </li>
+                {% else %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Log In<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><button type="button" style="width:160px; border-bottom: 1px solid white;" class="btn btn-success mx-2" data-toggle="modal" data-target="#loginModal">Login</button></li>
+
+                <li><button type="button" style="width:160px;" class="btn btn-success mx-2" data-toggle="modal" data-target="#signupModal">SignUp</button></li>
+                  </ul>
+                </li>
+                {% endif %}
+
                 <li style="padding-top: 15px">
                   <button type="button" class="btn btn-danger">
-                    <a href="{% url 'menu' %}" style="color: inherit"
+                    <a href="menu" style="color: inherit"
                       >Order Online</a
                     >
                   </button>
                 </li>
+                <li style="padding-top:15px;"><button type="button" class="btn btn-primary mx-2" id="popcart" data-container="body" data-html="true" data-toggle="popover" title="MyCart" data-placement="bottom" data-content="Bottom popover">
+                <i class="fa fa-shopping-cart fsc pull-left"></i>(<span id="cart">0</span>)
+              </button></li>
 
-                <li style="padding-top: 15px; padding-left: 0px">
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-toggle="modal"
-                    data-target="#cart"
-                  >
-                    <i class="fa fa-shopping-cart fsc pull-left"></i> (<span
-                      class="total-count"
-                    ></span
-                    >)
-                  </button>
-                </li>
               </ul>
             </div>
           </div>
@@ -131,7 +156,7 @@
           <div class="tittle-block">
             <div class="logo">
               <a href="{% url 'home' %}">
-                <img src="{% static 'web/img/logo.png' %}" alt="logo" />
+                <img src="{% static 'web/img/svg/White-logo-no-background.svg' %}" alt="logo" height="250px" />
               </a>
             </div>
             <h1>DELICIOUS Food</h1>
@@ -144,13 +169,99 @@
           </div>
         </section>
 
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: rgb(111 202 203);">
+                <h5 class="modal-title" id="loginModal">Login Here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="login/" method="post">{% csrf_token %}
+                  <div class="text-left my-2">
+                      <b><label for="username">Username</label></b>
+                      <input class="form-control" id="loginusername" name="loginusername" placeholder="Enter Your Username" type="text" required pattern="^[a-z]{3,15}$">
+                  </div>
+                  <div class="text-left my-2">
+                      <b><label for="password">Password</label></b>
+                      <input class="form-control" id="loginpassword" name="loginpassword" placeholder="Enter Your Password" type="password" required data-toggle="password">
+                  </div>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                  <a href="/shop/reset_password/" style="padding-left: 250px;">Forgot password?</a>
+                </form>
+                <p class="mb-0 mt-1">Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signupModal">Sign up now</a>.</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sign up Modal -->
+        <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: rgb(111 202 203);">
+                <h5 class="modal-title" id="signupModal">SignUp Here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="signup/" method="post">{% csrf_token %}
+                  <div class="form-group">
+                      <b><label for="username">Username</label></b>
+                      <input class="form-control" id="username" name="username" placeholder="Choose a unique Username" type="text" required pattern="^[a-z]{3,15}$">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <b><label for="f_name">First Name:</label></b>
+                      <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <b><label for="l_name">Last name:</label></b>
+                      <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last name" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <b><label for="email1">Email:</label></b>
+                      <input type="email" class="form-control" id="email1" name="email1" placeholder="Enter Your Email" required>
+                  </div>
+                  <div class="form-group">
+                    <b><label for="phone">Phone No:</label></b>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon">+91</span>
+                      </div>
+                      <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Phone Number" required pattern="[0-9]{10}">
+                    </div>
+                  </div>
+                  <div class="text-left my-2">
+                      <b><label for="password">Password:</label></b>
+                      <input class="form-control" id="password" name="password" placeholder="Enter Password" type="password" required data-toggle="password">
+                  </div>
+                  <div class="text-left my-2">
+                      <b><label for="password1">Renter Password:</label></b>
+                      <input class="form-control" id="password1" name="password1" placeholder="Renter Password" type="password" required data-toggle="password">
+                  </div>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+                <p class="mb-0 mt-1">Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login here</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <section class="about" id="about">
           <div class="container">
             <div class="row">
               <div class="col-md-12">
                 <div class="page-header wow fadeInDown">
                   <h1>
-                    the restaurant<small
+                    taste of india<small
                       >A little about us and a breif history of how we
                       started.</small
                     >
@@ -237,1048 +348,53 @@
                   <div class="menu-tags4">
                     <span data-filter="*" class="tagsort4-active">All</span>
                     <span data-filter=".biryani">Biryani</span>
-                    <span data-filter=".curry">Curry Combo</span>
-                    <span data-filter=".vegetable">Vegitable Combo</span>
-                    <span data-filter=".appeitizer">Appetizers</span>
-                    <span data-filter=".extra">Extra Oder</span>
+                    <span data-filter=".curry_combo">Curry Combo</span>
+                    <span data-filter=".vegetable_combo">Vegitable Combo</span>
+                    <span data-filter=".appetizers">Appetizers</span>
+                    <span data-filter=".extra_order">Extra Oder</span>
                     <span data-filter=".drinks">Drinks</span>
                   </div>
                 </div>
               </div>
               <div class="row menu-items4">
                 <!--    biryani-->
-                <div
-                  class="menu-item4 col-sm-3 col-xs-12 biryani dinner desserts"
-                >
+                {% for i in product %}
+                <div class="menu-item4 col-sm-3 col-xs-12 {{i.category}}">
                   <div class="menu-info">
                     <img
-                      src="{% static 'web/img/menu/3/chiken-salad.jpeg' %}"
+                      src="{{i.image.url}}"
                       class="img-responsive"
                       alt=""
                     />
-                    <a href="{% url 'menu' %}">
+
                       <div class="menu4-overlay">
-                        <h4>Biryani</h4>
-                        <p>Chicken Biryani with Raita and salad</p>
-                        <span class="price">$ 13.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
+                        <h5 class="card-text" title="{{i.product_name}}">{{i.category|slice:"0:23"}}</h5>
+                        <p class="card-title" id="namepr{{i.id}}">{{i.product_name|slice:"0:100"}}...</p>
+                                <h6 style="color: #ff0000">$ <i id="pricepr{{i.id}}">{{i.price}}</i>/-</h6>
+
+                                <span id="divpr{{i.id}}" class="divpr">
+                                    <button id="pr{{i.id}}" class="btn btn-primary cart">Add to Cart</button>
+                                </span>
+                                <a href="/shop/productView/{{i.id}}"> <button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button> </a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="{% url 'shop-cart' %}" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
+                        <br /><br />
                       </div>
-                    </a>
+
                   </div>
                 </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 biryani">
-                  <div class="menu-info">
-                    <a href="{% url 'menu' %}">
-                      <img
-                        src="{% static 'web/img/menu/3/goat-salad.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Biryani</h4>
-                        <p>Lamb/Goat Biryani with Raita and salad</p>
-                        <span class="price">$ 17.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="{% url 'shop-cart' %}" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div
-                  class="menu-item4 col-sm-3 col-xs-12 breakfast desserts biryani"
-                >
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/beef-salad.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Biryani</h4>
-                        <p>Beef Biryani with Raita and salad</p>
-                        <span class="price">$ 15.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 biryani">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/vegetable-salad.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Biryani</h4>
-                        <p>Vegetable Biryani with Raita and salad</p>
-                        <span class="price">$ 15.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
+                {% endfor %}
+
 
                 <!--    curry combo-->
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/chicken-butter.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Curry combo</h4>
-                        <p>Butter Chicken with Basmati rice or tandoori naan</p>
-                        <span class="price">$ 13.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 curry">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/chicken-tikka.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Curry combo</h4>
-                        <p>
-                          Chicken Tikka Masala with Basmati rice or tandoori
-                          naan
-                        </p>
-                        <span class="price">$ 13.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/chicken-curry.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Curry combo</h4>
-                        <p>Chicken curry with Basmati rice or tandoori naan</p>
-                        <span class="price">$ 13.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/beef-curry.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Curry combo</h4>
-                        <p>Beef curry with Basmati rice or tandoori naan</p>
-                        <span class="price">$ 14.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/goat-curry.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Curry combo</h4>
-                        <p>Goat curry with Basmati rice or tandoori naan</p>
-                        <span class="price">$ 15.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Curry combo</h4>
-                        <p>
-                          Fish curry (Pompano) with Basmati rice or tandoori
-                          naan
-                        </p>
-                        <span class="price">$ 13.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch starter curry">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Curry combo</h4>
-                        <p>Egg curry with Basmati rice or tandoori naan</p>
-                        <span class="price">$ 13.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
 
                 <!--    vegetable combo-->
-                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/mixed_vegetable.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Vegetable combo</h4>
-                        <p>
-                          Mixed vegetable with Basmati rice + 1 side (lentil or
-                          chickpeas)
-                        </p>
-                        <span class="price">$ 11.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/Cheakpeas.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Vegetable combo</h4>
-                        <p>
-                          Cheakpeas with Basmati rice + 1 side (mixed vegetable
-                          or lentil)
-                        </p>
-                        <span class="price">$ 11.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'img/menu/3/palak-paneer.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Vegetable combo</h4>
-                        <p>
-                          Palak Paneer with Basmati rice + 1 side (mixed
-                          vegetable, chickpeas or lentil)
-                        </p>
-                        <span class="price">$ 11.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 vegetable">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/lentil.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Vegetable combo</h4>
-                        <p>
-                          Lentil with Basmati rice +1 side (mixed vegetable,
-                          chickpeas or lentil)
-                        </p>
-                        <span class="price">$ 11.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch vegetable">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/vegetable-salad.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Vegetable combo</h4>
-                        <p>Vegetable Biryani with Raita and salad</p>
-                        <span class="price">$ 15.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
 
                 <!--    appeitizer-->
-                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/somosa.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Appeitizers</h4>
-                        <p>Samosa- (chicken/beef/lamb/vegetable)</p>
-                        <span class="price">2 for $ 5</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/singara.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Appeitizers</h4>
-                        <p>Singara- (Bangladeshi style with special chatney)</p>
-                        <span class="price">2 for $ 5</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/egg-roll.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Appeitizers</h4>
-                        <p>Egg roll</p>
-                        <span class="price">2 for $ 5</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/roll.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Appeitizers</h4>
-                        <p>Spring roll</p>
-                        <span class="price">3 for $ 5</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/roll.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Appeitizers</h4>
-                        <p>Shami Kabab- (chicken/beef/chapli)</p>
-                        <span class="price">$ 2.50</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 appeitizer">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/fuska-panipuri.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Appeitizers</h4>
-                        <p>Chatpoti- (Fuchka/panipuri)</p>
-                        <span class="price">$ 13.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 lunch appeitizer">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/but-muri.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Appeitizers</h4>
-                        <p>Boot-Muri</p>
-                        <span class="price">$ 9.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
 
                 <!--    extra-->
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/ex-basmoti.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Basmati rice</p>
-                        <span class="price">$ 4.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/ex-butter.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Butter chicken</p>
-                        <span class="price">$ 7.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/ex-tikka.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Chicken tikka masala</p>
-                        <span class="price">$ 7.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/ex-chicken.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Chicken curry</p>
-                        <span class="price">$ 7.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/beef-curry.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Beef curry</p>
-                        <span class="price">$ 7.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/ex-goat.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Goat curry</p>
-                        <span class="price">$ 7.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Fish curry</p>
-                        <span class="price">$ 7.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/cc.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Egg curry</p>
-                        <span class="price">$ 7.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/palak-paneer.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Palak paneer</p>
-                        <span class="price">$ 6.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/ex-checkpeas.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Chickpeas</p>
-                        <span class="price">$ 6.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 extra">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/lentil.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Extra order</h4>
-                        <p>Lentil (Dal)</p>
-                        <span class="price">$ 6.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
 
                 <!--    drinks-->
-                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
-                  <div class="menu-info">
-                    <a href="menu_all.html">
-                      <img
-                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Drinks</h4>
-                        <p>Mango lassi</p>
-                        <span class="price">$ 3.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Drinks</h4>
-                        <p>Bottle soda</p>
-                        <span class="price">$ 2.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Drinks</h4>
-                        <p>Bottle soda</p>
-                        <span class="price">$ 1.50</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Drinks</h4>
-                        <p>Can soda</p>
-                        <span class="price">$ 1.50</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Drinks</h4>
-                        <p>Tea (masala chai)</p>
-                        <span class="price">$ 3.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="menu-item4 col-sm-3 col-xs-12 drinks">
-                  <div class="menu-info">
-                    <a href="menu_grid.html">
-                      <img
-                        src="{% static 'web/img/menu/3/drink.jpeg' %}"
-                        class="img-responsive"
-                        alt=""
-                      />
-                      <div class="menu4-overlay">
-                        <h4>Drinks</h4>
-                        <p>Coffee</p>
-                        <span class="price">$ 3.99</span>
-                        <button type="button" class="btn btn-info">
-                          Add Cart
-                        </button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">
-                          <a href="shop_cart.html" style="color: inherit"
-                            >Buy Now</a
-                          ></button
-                        ><br /><br />
-                      </div>
-                    </a>
-                  </div>
-                </div>
+
                 <!--    menu ends-->
               </div>
             </div>
@@ -1286,45 +402,7 @@
         </section>
 
         <!-- Modal -->
-        <div
-          class="modal fade"
-          id="cart"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <table class="show-cart table"></table>
-                <div>Total price: $<span class="total-cart"></span></div>
-              </div>
-              <div class="modal-footer">
-                <button class="clear-cart btn btn-danger">Clear Cart</button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">Order now</button>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <!-- END EDMO HTML (Happy Coding!)-->
 
         <section class="instagram">
@@ -1463,7 +541,9 @@
       data-cfasync="false"
       src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="{% static 'web/js/vendor/jquery-1.11.2.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="{% static 'web/js/vendor/bootstrap.min.js' %}"></script>
     <script src="{% static 'web/js/vendor/jquery.flexslider-min.js' %}"></script>
     <script src="{% static 'web/js/vendor/spectragram.js' %}"></script>
@@ -1483,7 +563,106 @@
     <script src="{% static 'web/js/main.js' %}"></script>
     <script src="{% static 'web/js/vendor/mc/jquery.ketchup.all.min.js' %}"></script>
     <script src="{% static 'web/js/vendor/mc/main.js' %}"></script>
+    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
-    <script src="{% static './web/js/script.js' %}"></script>
+<!--    <script src="{% static './web/js/script.js' %}"></script>-->
+  <script>
+// console.log({{request.user.id}});
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    updateCart(cart);
+}
+
+// If the add to cart button is clicked, add/increment the item
+$('.divpr').on('click', 'button.cart', function() {
+    var idstr = this.id.toString();
+    //console.log(idstr);
+    if (cart[idstr] != undefined) {
+        qty = cart[idstr][0] + 1;
+    } else {
+        qty = 1;
+        name = document.getElementById('name'+idstr).innerHTML;
+        price = document.getElementById('price'+idstr).innerHTML;
+        cart[idstr] = [qty, name, parseInt(price)];
+    }
+    updateCart(cart);
+});
+
+
+$('#popcart').popover();
+updatePopover(cart);
+
+function updatePopover(cart) {
+    var popStr = "";
+    popStr = popStr + "<div class='mx-2 my-2'>";
+    var i = 1;
+    var j = 0;
+    for(var item in cart) {
+        popStr = popStr + "<b>" + i + "</b>. ";
+        popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 15) + "... (Qty: " + cart[item][0] + ')<br>';
+        i = i + 1;
+        j = j + 1;
+    }
+    if(j == 0) {
+        popStr = popStr + "<p><b> No item available in your cart </b></p><div class='mx-2 my-2'>";
+        popStr = popStr + "</div> <a href='menu'><button class='btn btn-primary'>Add items</button></a> ";
+    }
+    else{
+        popStr = popStr + "</div> <a href='shop_checkout'><button class='btn btn-primary' id='checkout'>Checkout</button></a> <a href='/menu'><button class='btn btn-primary' onclick='clearCart()' id='clearCart'>Clear Cart</button></a>  ";
+    }
+    document.getElementById("popcart").setAttribute('data-content', popStr);
+    $('#popcart').popover();
+}
+
+function clearCart() {
+  cart = JSON.parse(localStorage.getItem('cart'));
+  for (var item in cart) {
+    document.getElementById('div' + item).innerHTML = '<button id="'+ item +'" class="btn btn-primary cart">Add to Cart</button>'
+  }
+  localStorage.clear();
+  cart = {};
+  updateCart(cart);
+}
+
+function updateCart(cart) {
+    //console.log(cart);
+    var sum = 0;
+    for (var item in cart) {
+        sum = sum + cart[item][0];
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = sum;
+    updatePopover(cart);
+}
+
+$('.divpr').on("click", "button.minus", function() {
+    //console.log("minus clicked");
+    a = this.id.slice(7, );
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    if(cart['pr' + a][0] == 0) {
+        document.getElementById('divpr' + a).innerHTML = '<button id="pr'+a+'" class="btn btn-primary cart">Add to Cart</button>';
+        delete cart['pr'+a];
+    }
+    else {
+        document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    }
+    updateCart(cart);
+
+});
+
+$('.divpr').on("click", "button.plus", function() {
+    //console.log("plus clicked");
+    a = this.id.slice(6, );
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    updateCart(cart);
+});
+
+</script>
   </body>
 </html>

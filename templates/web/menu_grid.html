@@ -63,9 +63,9 @@
               </button>
               <a class="navbar-brand" href="{% url 'menu' %}">
                 <img
-                  src="{% static 'web/img/svg/Color%20logo%20with%20background.svg' %}"
+                  src="{% static 'web/img/svg/White-logo-no-background.svg' %}"
                   alt="nav-logo"
-                  height="60"
+                  height="40"
                   ;
                   width="250"
                 />
@@ -89,12 +89,11 @@
                     role="button"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    >Pages<span class="caret"></span
+                    >Orders<span class="caret"></span
                   ></a>
                   <ul class="dropdown-menu">
-                    <li><a href="elements.html">Shortcodes</a></li>
-                    <li><a href="shop_account.html">Login / Signup</a></li>
-                    <li><a href="404.html">404 Page</a></li>
+                    <li><a href="orderView">Order History</a></li>
+                    <li><a href="tracker">Track Order</a></li>
                   </ul>
                 </li>
 
@@ -140,7 +139,7 @@
 
                 <li style="padding-top: 15px">
                   <button type="button" class="btn btn-danger">
-                    <a href="menu_grid.html" style="color: inherit"
+                    <a href="menu" style="color: inherit"
                       >Order Online</a
                     >
                   </button>
@@ -276,10 +275,10 @@
                   <div class="menu-tags4">
                     <span data-filter="*" class="tagsort4-active">All</span>
                     <span data-filter=".biryani">Biryani</span>
-                    <span data-filter=".curry">Curry Combo</span>
-                    <span data-filter=".vegetable">Vegitable Combo</span>
-                    <span data-filter=".appeitizer">Appetizers</span>
-                    <span data-filter=".extra">Extra Oder</span>
+                    <span data-filter=".curry_combo">Curry Combo</span>
+                    <span data-filter=".vegetable_combo">Vegitable Combo</span>
+                    <span data-filter=".appetizers">Appetizers</span>
+                    <span data-filter=".extra_order">Extra Oder</span>
                     <span data-filter=".drinks">Drinks</span>
                   </div>
                 </div>
@@ -287,18 +286,18 @@
               <div class="row menu-items4">
                 <!--    biryani-->
                 {% for i in product %}
-                <div class="menu-item4 col-sm-3 col-xs-12 biryani">
+                <div class="menu-item4 col-sm-3 col-xs-12 {{i.category}}">
                   <div class="menu-info">
                     <img
                       src="{{i.image.url}}"
                       class="img-responsive"
                       alt=""
                     />
-                    <a href="">
+
                       <div class="menu4-overlay">
-                        <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name|slice:"0:20"}}...</h5>
-                                <h6 style="color: #ff0000">Rs. <i id="pricepr{{i.id}}">{{i.price}}</i>/-</h6>
-                                <p class="card-text">{{i.desc|slice:"0:23"}}...</p>
+                        <h5 class="card-text" title="{{i.product_name}}">{{i.category|slice:"0:23"}}</h5>
+                        <p class="card-title" id="namepr{{i.id}}">{{i.product_name|slice:"0:100"}}...</p>
+                                <h6 style="color: #ff0000">$ <i id="pricepr{{i.id}}">{{i.price}}</i>/-</h6>
                                 <span id="divpr{{i.id}}" class="divpr">
                                     <button id="pr{{i.id}}" class="btn btn-primary cart">Add to Cart</button>
                                 </span>
@@ -306,7 +305,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <br /><br />
                       </div>
-                    </a>
+
                   </div>
                 </div>
                 {% endfor %}
@@ -515,12 +514,12 @@ updatePopover(cart);
 
 function updatePopover(cart) {
     var popStr = "";
-    popStr = popStr + "<div class='mx-2 my-2'>";
+    popStr = popStr + "<div id='pd' class='mx-2 my-2'>";
     var i = 1;
     var j = 0;
     for(var item in cart) {
         popStr = popStr + "<b>" + i + "</b>. ";
-        popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 15) + "... (Qty: " + cart[item][0] + ')<br>';
+        popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 15) + "... (Qty: " + cart[item][0] + ')<br>' ;
         i = i + 1;
         j = j + 1;
     }
@@ -544,6 +543,26 @@ function clearCart() {
   cart = {};
   updateCart(cart);
 }
+
+// Delete item button
+
+$('.p').on("click", ".delete-item", function(event) {
+  var name = $(this).data('name')
+  console.log(name);
+  cart.removeItem(name);
+  updateCart(cart);
+})
+
+function deleteItem() {
+  var name = $(this).data('name')
+  cart.removeItem(name);
+  updateCart(cart);
+  updatePopover(cart);
+}
+
+
+
+
 
 function updateCart(cart) {
     //console.log(cart);
