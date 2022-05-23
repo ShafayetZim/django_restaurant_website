@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.views import View
 from dashboard.models import *
@@ -5,14 +6,20 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from math import ceil
 from django.contrib.auth import authenticate, login, logout
+import json
 
 
 # home
 class HomeView(View):
     def get(self, request):
         print("home called")
+        context = {
+            'product': Product.objects.all(),
+            'title': "Product",
+            'pageview': "Menu"
+        }
 
-        return render(request, 'web/index_animation.html')
+        return render(request, 'web/index_animation.html', context)
 
 
 # about
@@ -131,3 +138,49 @@ def checkout(request):
         return render(request, 'web/shop_checkout.html', {'thank': thank, 'id': id})
     return render(request, 'web/shop_checkout.html')
 
+
+def orderView(request):
+    if request.user.is_authenticated:
+        current_user = request.user
+        orderHistory = Orders.objects.filter(userId=current_user.id).order_by('-order_id')
+        page_num = request.GET.get('page', 1)
+        paginator = Paginator(orderHistory, 10)  # 10 data per page
+        if len(orderHistory) == 0:
+            messages.info(request, "You have not ordered.")
+            return render(request, 'web/order_view.html')
+        try:
+            page_obj = paginator.page(page_num)
+        except PageNotAnInteger:
+            # if page is not an integer, deliver the first page
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            # if the page is out of range, deliver the last page
+            page_obj = paginator.page(paginator.num_pages)
+        return render(request, 'web/order_view.html', {'orderHistory': orderHistory, 'page_obj': page_obj})
+    return render(request, 'web/order_view.html')
+
+
+def tracker(request):
+    if request.method == "POST":
+        orderId = request.POST.get('orderId', '')
+        email = request.POST.get('email', '')
+        name = request.POST.get('name', '')
+        password = request.POST.get('password')
+        user = authenticate(username=name, password=password)
+        if user is not None:
+            try:
+                order = Orders.objects.filter(order_id=orderId, email=email)
+                if len(order) > 0:
+                    update = OrderUpdate.objects.filter(order_id=orderId)
+                    updates = []
+                    for item in update:
+                        updates.append({'text': item.update_desc, 'time': item.timestamp})
+                        response = json.dumps({"status": "success", "updates": updates, "itemsJson": order[0].items_json}, default=str)
+                    return HttpResponse(response)
+                else:
+                    return HttpResponse('{"status":"noitem"}')
+            except Exception as e:
+                return HttpResponse('{"status":"error"}')
+        else:
+            return HttpResponse('{"status":"Invalid"}')
+    return render(request, 'web/tracker.html')
