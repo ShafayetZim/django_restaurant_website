@@ -1,0 +1,76 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+        <!-- twitter-bootstrap-wizard css -->
+        <link rel="stylesheet" href="{% static 'dashboard/libs/twitter-bootstrap-wizard/prettify.css' %}">
+
+        <!-- select2 css -->
+        <link href="{% static 'dashboard/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+
+        <!-- dropzone css -->
+        <link href="{% static 'dashboard/libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock extra_css %}
+
+{% block content %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                   {{ form.product_name|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                   {{ form.category|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                    {{ form.price|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group mb-3 col-6">
+                                                   {{ form.desc|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group mb-3 col-6">
+                                                   {{ form.pub_date|as_crispy_field }}
+                                                </div>
+                                                <div class="custom-file col-6">
+                                                    {{ form.image|as_crispy_field }}
+                                                </div>
+                                            </div>
+
+                                          <button type="submit" class="btn btn-primary mt-2">Update</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+{% endblock content %}
+
+{% block extra_javascript %}
+
+        <!-- twitter-bootstrap-wizard js -->
+        <script src="{% static 'dashboard/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js' %}"></script>
+
+        <script src="{% static 'dashboard/libs/twitter-bootstrap-wizard/prettify.js' %}"></script>
+
+        <!-- select 2 plugin -->
+        <script src="{% static 'dashboard/libs/select2/js/select2.min.js' %}"></script>
+
+        <!-- dropzone plugin -->
+        <script src="{% static 'dashboard/libs/dropzone/min/dropzone.min.js' %}"></script>
+
+        <!-- init js -->
+<!--        <script src="{% static 'js/pages/ecommerce-add-product.init.js' %}"></script>-->
+        <script src="{% static 'js/pages/form-advanced.init.js' %}"></script>
+{% endblock extra_javascript %}
