@@ -33,7 +33,7 @@
                                                         <td><img src="{{ item.image.url }}" alt=""  height="100" /></td>
                                                         <td>{{item.desc}}</td>
                                                         <td>
-                                                            <a href="">
+                                                            <a href="{% url 'product-edit' item.id  %}">
                                                                 <button class="btn btn-outline-info">Edit</button>
                                                             </a>
                                                             <button class="btn btn-outline-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#composemodal{{item.id}}">
@@ -58,7 +58,7 @@
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                         <!-- <button type="button" class="btn btn-primary">Send <i class="fab fa-bs-telegram-plane ms-1"></i></button>-->
-                                                                        <a href=""
+                                                                        <a href="{% url 'delete-product' id=item.id %}"
                                            class="btn btn-danger">Delete</a>
                                                                     </div>
                                                                 </div>
