@@ -63,9 +63,9 @@
               </button>
               <a class="navbar-brand" href="index_animation.html">
                 <img
-                  src="{% static 'web/img/svg/Color%20logo%20with%20background.svg' %}"
+                  src="{% static 'web/img/svg/White-logo-no-background.svg' %}"
                   alt="nav-logo"
-                  height="60"
+                  height="40"
                   ;
                   width="250"
                 />
@@ -89,12 +89,11 @@
                     role="button"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    >Pages<span class="caret"></span
+                    >Orders<span class="caret"></span
                   ></a>
                   <ul class="dropdown-menu">
-                    <li><a href="elements.html">Shortcodes</a></li>
-                    <li><a href="shop_account.html">Login / Signup</a></li>
-                    <li><a href="404.html">404 Page</a></li>
+                    <li><a href="orderView">Order History</a></li>
+                    <li><a href="tracker">Track Order</a></li>
                   </ul>
                 </li>
 
@@ -102,30 +101,53 @@
 
                 <li><a href="{% url 'contact' %}">Contact</a></li>
 
+                {% if user.is_authenticated %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >{{request.user}}<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="logout/">Logout</a></li>
+                  </ul>
+                </li>
+                {% else %}
+
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Log In<span class="caret"></span
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><button type="button" style="width:160px; border-bottom: 1px solid white;" class="btn btn-success mx-2" data-toggle="modal" data-target="#loginModal">Login</button></li>
+
+                <li><button type="button" style="width:160px;" class="btn btn-success mx-2" data-toggle="modal" data-target="#signupModal">SignUp</button></li>
+                  </ul>
+                </li>
+                {% endif %}
+
                 <li style="padding-top: 15px">
                   <button type="button" class="btn btn-danger">
-                    <a href="{% url 'menu' %}" style="color: inherit"
+                    <a href="menu_grid.html" style="color: inherit"
                       >Order Online</a
                     >
                   </button>
                 </li>
+                <li style="padding-top:15px;"><button type="button" class="btn btn-primary mx-2" id="popcart" data-container="body" data-html="true" data-toggle="popover" title="MyCart" data-placement="bottom" data-content="Bottom popover">
+                <i class="fa fa-shopping-cart fsc pull-left"></i>(<span id="cart">0</span>)
+              </button></li>
 
-                <li style="padding-top: 15px; padding-left: 0px">
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-toggle="modal"
-                    data-target="#cart"
-                  >
-                    <i class="fa fa-shopping-cart fsc pull-left"></i> (<span
-                      class="total-count"
-                    ></span
-                    >)
-                  </button>
-                </li>
-                <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-html="true" data-toggle="popover" title="MyCart" data-placement="bottom" data-content="Bottom popover">
-          Cart(<span id="cart">0</span>)
-        </button>
               </ul>
             </div>
           </div>
@@ -147,166 +169,210 @@
           </div>
         </section>
 
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: rgb(111 202 203);">
+                <h5 class="modal-title" id="loginModal">Login Here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="login/" method="post">{% csrf_token %}
+                  <div class="text-left my-2">
+                      <b><label for="username">Username</label></b>
+                      <input class="form-control" id="loginusername" name="loginusername" placeholder="Enter Your Username" type="text" required pattern="^[a-z]{3,15}$">
+                  </div>
+                  <div class="text-left my-2">
+                      <b><label for="password">Password</label></b>
+                      <input class="form-control" id="loginpassword" name="loginpassword" placeholder="Enter Your Password" type="password" required data-toggle="password">
+                  </div>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                  <a href="/shop/reset_password/" style="padding-left: 250px;">Forgot password?</a>
+                </form>
+                <p class="mb-0 mt-1">Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signupModal">Sign up now</a>.</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sign up Modal -->
+        <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: rgb(111 202 203);">
+                <h5 class="modal-title" id="signupModal">SignUp Here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="signup/" method="post">{% csrf_token %}
+                  <div class="form-group">
+                      <b><label for="username">Username</label></b>
+                      <input class="form-control" id="username" name="username" placeholder="Choose a unique Username" type="text" required pattern="^[a-z]{3,15}$">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <b><label for="f_name">First Name:</label></b>
+                      <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <b><label for="l_name">Last name:</label></b>
+                      <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last name" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <b><label for="email1">Email:</label></b>
+                      <input type="email" class="form-control" id="email1" name="email1" placeholder="Enter Your Email" required>
+                  </div>
+                  <div class="form-group">
+                    <b><label for="phone">Phone No:</label></b>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon">+91</span>
+                      </div>
+                      <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Phone Number" required pattern="[0-9]{10}">
+                    </div>
+                  </div>
+                  <div class="text-left my-2">
+                      <b><label for="password">Password:</label></b>
+                      <input class="form-control" id="password" name="password" placeholder="Enter Password" type="password" required data-toggle="password">
+                  </div>
+                  <div class="text-left my-2">
+                      <b><label for="password1">Renter Password:</label></b>
+                      <input class="form-control" id="password1" name="password1" placeholder="Renter Password" type="password" required data-toggle="password">
+                  </div>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+                <p class="mb-0 mt-1">Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login here</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <section class="shop-content">
           <div class="container">
             <div class="row">
-              <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-10 ">
                 <div class="row">
                   <div class="container" id="cont">
-    <div class="col my-3">
-        <span id="title"><h2> My Awesome Cart Express Checkout - Review Your Cart items </h2></span>
-        <div class="my-2">
-            <ul class="list-group" id='items'>
-            </ul>
-        </div>
-    </div>
-    <div class="col my-4">
-        <span id="info">
-        <h2>{{ request.user.first_name }} Enter Address & Other Details</h2>
-        <form method="post" action="checkout/">{% csrf_token %}
-            <input type="hidden" name="itemsJson" id="itemsJson">
-            <input type="hidden" name="amount" id="amount">
-            <input type="hidden" name="user_id" id="user_id" value="{{ request.user.id }}">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="Email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="abc@gmail.com" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="Address1">Address</label>
-                <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St" required>
-            </div>
-            <div class="form-group">
-                <label for="Address2">Address Line 2</label>
-                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="City">City</label>
-                    <input type="text" class="form-control" id="city" name="city" placeholder="Surat" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="State">State</label>
-                    <input type="text" class="form-control" id="state" name="state" placeholder="Gujarat" required>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="zip_code">Zip</label>
-                    <input type="text" class="form-control" id="zip_code" name="zip_code" placeholder="xxxxxx" required pattern="[0-9]{6}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" name="phone" placeholder="xxxxxxxxxxx" required pattern="[0-9]{10}">
-            </div>
-            <div class="alert alert-info">
-              <strong>Info!</strong> online payment are currently disabled so please choose cash on delivery.
-            </div>
-            <button type="submit" class="btn btn-primary" name="onlinePay" disabled>Online Pay</button>
-            <button type="submit" class="btn btn-primary" name="cashOnDelivery">Cash On Delivery</button>
-        </form>
-        </span>
-    </div>
-</div>
-                </div>
-                <br />
-                <h4 class="text-left">Your order</h4>
-                <br />
-                <table class="table table-bordered extra-padding">
-                  <tbody>
-                    <tr>
-                      <th>Cart Subtotal</th>
-                      <td><span class="amount">£190.00</span></td>
-                    </tr>
-                    <tr>
-                      <th>Shipping and Handling</th>
-                      <td>Free Shipping</td>
-                    </tr>
-                    <tr>
-                      <th>Order Total</th>
-                      <td>
-                        <strong><span class="amount">£190.00</span></strong>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br />
-                <h4 class="text-left">Payment Method</h4>
-                <br />
-                <div class="payment-method">
-                  <div class="row">
-                    <form>
-                      <div class="col-md-4">
-                        <label>
-                          <input
-                            name="payment"
-                            id="radio1"
-                            class="css-checkbox"
-                            type="radio"
-                          /><span>Direct Bank Transfer</span></label
+                    <div class="col my-3">
+                        <span id="title"><h2> Review Your Cart items </h2></span>
+                        <div class="my-2">
+                            <ul class="list-group" id='items'>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col my-3">
+                      <span><h2> Pick up Address </h2></span>
+                      <p class="text-center">Please collect your delivery from below address.</p>
+                      <p class="text-center" style="font-size: 1.3rem; ">
+                        3200 S AIRPORT RD W,<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp; TRAVERSE CITY MI
+                      </p>
+                      <p class="text-center" style="font-size: 1.3rem;">Phone: (929) 346-2200</p>
+                      <p class="text-center" style="font-size: 1.3rem;">
+                        <a
+                          href="https://demo.web3canvas.com/cdn-cgi/l/email-protection"
+                          class="__cf_email__"
+                          data-cfemail="41323431312e33350133243235203433202f356f222e2c"
+                          >[email&#160;protected]</a
                         >
-                        <div class="space20"></div>
-                        <p>
-                          Make payment directly into our bank account and use
-                          your Order ID as the reference.
-                        </p>
-                      </div>
-                      <div class="col-md-4">
-                        <label>
-                          <input
-                            name="payment"
-                            id="radio2"
-                            class="css-checkbox"
-                            type="radio"
-                          /><span>Cheque Payment</span></label
-                        >
-                        <div class="space20"></div>
-                        <p>
-                          Please send your cheque to BLVCK Fashion House,
-                          Oatland Rood, UK, LS71JR
-                        </p>
-                      </div>
-                      <div class="col-md-4">
-                        <label>
-                          <input
-                            name="payment"
-                            id="radio3"
-                            class="css-checkbox"
-                            type="radio"
-                          /><span>Paypal</span></label
-                        >
-                        <div class="space20"></div>
-                        <p>
-                          Pay via PayPal; you can pay with your credit card if
-                          you don't have a PayPal account
-                        </p>
-                      </div>
-                    </form>
-                  </div>
-                  <br />
-                  <form class="text-center">
-                    <input
-                      name="checkboxG2"
-                      id="checkboxG2"
-                      class="css-checkbox"
-                      type="checkbox"
-                    /><span
-                      >I've read and accept the
-                      <a href="index.html">terms &amp; conditions</a></span
-                    >
-                  </form>
-                  <div class="text-center top-space-lg">
-                    <a
-                      href="shop_account_detail.html"
-                      class="btn btn-default btn-lg"
-                      >Pay Now</a
-                    >
+                      </p>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                    <div class="col my-4">
+                        <span id="info">
+                        <h2>{{ request.user.first_name }} Enter Address & Other Details</h2>
+                            <form method="post" action="checkout/">{% csrf_token %}
+                                <input type="hidden" name="itemsJson" id="itemsJson">
+                                <input type="hidden" name="amount" id="amount">
+                                <input type="hidden" name="user_id" id="user_id" value="{{ request.user.id }}">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="Email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="abc@gmail.com" required>
+                                    </div>
+                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label for="Address1">Address</label>-->
+<!--                                    <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St" required>-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="Address2">Address Line 2</label>-->
+<!--                                    <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">-->
+<!--                                </div>-->
+<!--                                <div class="form-row">-->
+<!--                                    <div class="form-group col-md-6">-->
+<!--                                        <label for="City">City</label>-->
+<!--                                        <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group col-md-4">-->
+<!--                                        <label for="State">State</label>-->
+<!--                                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter state" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group col-md-2">-->
+<!--                                        <label for="zip_code">Zip</label>-->
+<!--                                        <input type="text" class="form-control" id="zip_code" name="zip_code" placeholder="xxxxxx" required pattern="[0-9]{6}">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="xxxxxxxxxx" required pattern="[0-9]{10}">
+                                </div>
+                                <div class="alert alert-info">
+                                  <strong>Info!</strong> online payment are currently disabled so please choose cash on delivery.
+                                </div>
+                                <button type="submit" class="btn btn-primary" name="onlinePay" disabled>Online Pay</button>
+                                <button type="submit" class="btn btn-primary" name="cashOnDelivery">Cash On Delivery</button>
+                            </form>
+                        </span>
+                    </div>
+                    {% else %}
+                    <div id="cont2">
+                        <div class="alert alert-info">
+                            <font style="font-size:22px"><center>You need to <strong><a class="alert-link" data-toggle="modal" data-target="#loginModal">Login</a></strong> before checking out</center></font>
+                        </div>
+                    </div>
+                    {% endif %}
                   </div>
                 </div>
+                <br />
+<!--                <h4 class="text-left">Your order</h4>-->
+<!--                <br />-->
+<!--                <table class="table table-bordered extra-padding">-->
+<!--                  <tbody>-->
+<!--                    <tr>-->
+<!--                      <th>Cart Subtotal</th>-->
+<!--                      <td><span class="amount">£190.00</span></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <th>Shipping and Handling</th>-->
+<!--                      <td>Free Shipping</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <th>Order Total</th>-->
+<!--                      <td>-->
+<!--                        <strong><span class="amount">£190.00</span></strong>-->
+<!--                      </td>-->
+<!--                    </tr>-->
+<!--                  </tbody>-->
+<!--                </table>-->
+<!--                <br />-->
+
+
+
               </div>
             </div>
           </div>
@@ -316,36 +382,7 @@
 
         <!-- END EDMO HTML (Happy Coding!)-->
 
-        <section class="subscribe">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h1>Subscribe</h1>
-                <p>Get updates about new dishes and upcoming events</p>
-                <form
-                  class="form-inline"
-                  action="https://demo.web3canvas.com/themeforest/tomato/php/subscribe.php"
-                  id="invite"
-                  method="POST"
-                >
-                  <div class="form-group">
-                    <input
-                      class="e-mail form-control"
-                      name="email"
-                      id="address"
-                      type="email"
-                      placeholder="Your Email Address"
-                      required
-                    />
-                  </div>
-                  <button type="submit" class="btn btn-default">
-                    <i class="fa fa-angle-right"></i>
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
+
 
         <section class="footer">
           <div class="container">
@@ -496,6 +533,7 @@
     <script src="{% static 'web/js/main.js' %}"></script>
     <script src="{% static 'web/js/vendor/mc/jquery.ketchup.all.min.js' %}"></script>
     <script src="{% static 'web/js/vendor/mc/main.js' %}"></script>
+    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
 <!--    <script src="{% static './web/js/script.js' %}"></script>-->
 
@@ -513,7 +551,7 @@ if ($.isEmptyObject(cart)) {
     // If object is empty
     mystr = "<div class='alert alert-info'><font style='font-size:22px'>"
     mystr = mystr + "<center>Your cart is <strong>Empty</strong>, please <strong>Add</strong> some items before checking out ! </center>"
-    mystr = mystr + "<center>Click <a href='/shop/' class='alert-link'>Here</a> to Add items.</center></font></div>";
+    mystr = mystr + "<center>Click <a href='menu' class='alert-link'>Here</a> to Add items.</center></font></div>";
     $('#items').append(mystr);
     document.getElementById('info').innerHTML = "";
     document.getElementById('title').innerHTML = "";
@@ -526,10 +564,10 @@ if ($.isEmptyObject(cart)) {
         sum = sum + qty;
         sumPrice = qty * itemPrice;
         totalPrice = totalPrice + sumPrice;
-        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${++i} : ${name}<span class="badge badge-primary badge-pill">${qty} x Rs. ${itemPrice} = Rs. ${sumPrice}</span></li>`;
+        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${++i} : ${name}<span class="badge badge-primary badge-pill">${qty} x Us. ${itemPrice} = Us. ${sumPrice}</span></li>`;
         $('#items').append(mystr);
     }
-    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center" style="background: bisque;">Total Price:</span><span class="badge badge-danger badge-pill" id="totalPrice">Rs. ${totalPrice} /-</span></li>`;
+    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center" style="background: bisque;">Total Price:</span><span class="badge badge-danger badge-pill" id="totalPrice">Us. ${totalPrice} /-</span></li>`;
     $('#items').append(mystr);
 }
 document.getElementById('cart').innerHTML = sum;
