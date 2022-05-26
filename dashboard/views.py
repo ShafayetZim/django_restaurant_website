@@ -6,9 +6,14 @@ from django.contrib import messages
 from django.views.generic import UpdateView, CreateView, ListView
 from django.urls import reverse_lazy
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Dashboard
-class DashboardView(View):
+class DashboardView(LoginRequiredMixin,View):
+    login_url = 'admin-login'
     def get(self, request):
         print("dashboard called")
         greeting = {}
@@ -18,6 +23,7 @@ class DashboardView(View):
 
 
 # create product
+@login_required(login_url='admin-login')
 def create_product(request):
    if request.method == "POST":
     form = ProductCreateForm(request.POST, request.FILES)
@@ -32,7 +38,8 @@ def create_product(request):
 
 
 # product list
-class ProductListView(View):
+class ProductListView(LoginRequiredMixin, View):
+    login_url = 'admin-login'
     def get(self, request):
         context = {
             'product': Product.objects.all(),
@@ -43,7 +50,8 @@ class ProductListView(View):
 
 
 # edit-product
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = 'admin-login'
     model = Product
     form_class = ProductUpdateForm
     success_url = reverse_lazy('dash-product')
@@ -60,6 +68,7 @@ class ProductUpdateView(UpdateView):
 
 
 # product-delete
+@login_required(login_url='admin-login')
 def product_delete(request, id):
     if request.method == 'GET':
         instance = Product.objects.get(id=id)
@@ -69,7 +78,8 @@ def product_delete(request, id):
 
 
 # order list view
-class OrderListView(ListView, ):
+class OrderListView(LoginRequiredMixin, ListView, ):
+    login_url = 'admin-login'
     model = Orders  # Model I want to Covert to List
     template_name = 'menu/order-table.html'  # Template Name
     context_object_name = 'order'  # Change default name of objectList
@@ -83,7 +93,8 @@ class OrderListView(ListView, ):
 
 
 # tracking list view
-class TrackingListView(ListView, ):
+class TrackingListView(LoginRequiredMixin, ListView, ):
+    login_url = 'admin-login'
     model = OrderUpdate  # Model I want to Covert to List
     template_name = 'menu/order-tracking.html'  # Template Name
     context_object_name = 'tracking'  # Change default name of objectList
@@ -96,7 +107,8 @@ class TrackingListView(ListView, ):
         return context
 
 
-class TrackingChangeView( UpdateView):
+class TrackingChangeView(LoginRequiredMixin, UpdateView):
+    login_url = 'admin-login'
     model = OrderUpdate
     form_class = TrackingForm
     success_url = reverse_lazy('order-tracking')
@@ -110,3 +122,27 @@ class TrackingChangeView( UpdateView):
         context["title"] = "Change Tracking"
         context["pageview"] = "Tracking List"
         return context
+
+
+# admin login
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.info(request, 'Username OR Password is incorrect')
+
+    context = {}
+    return render(request, 'accounts/login.html', context)
+
+
+# admin logout
+def logoutAdmin(request):
+    logout(request)
+    return redirect('admin-login')
