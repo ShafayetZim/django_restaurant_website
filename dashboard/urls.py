@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 from . import views
 
@@ -9,6 +10,8 @@ urlpatterns = [
     path('delete-product/<int:id>', views.product_delete, name='delete-product'),  # Product delete
     path('order-table', views.OrderListView.as_view(), name="order-table"),  # order list
     path('order-tracking', views.TrackingListView.as_view(), name="order-tracking"),  # tracking list
-    path('change-tracking/<int:pk>', views.TrackingChangeView.as_view(), name='change-tracking'),  # track-parcel
+    path('change-tracking/<int:pk>', views.TrackingChangeView.as_view(), name='change-tracking'),  # track-order
+    path('admin-login', views.loginPage, name='admin-login'),  # admin login
+    path('admin-logout', views.logoutAdmin, name='admin-logout'),  # admin logout
 
 ]
